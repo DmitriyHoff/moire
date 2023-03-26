@@ -1,12 +1,19 @@
 <script setup>
 import { BASE_API_URL } from '../config';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
-defineProps(['modelValue']);
-defineEmits(['update:modelValue']);
+const props = defineProps(['modelValue']);
+const emit = defineEmits(['update:modelValue']);
 const categories = ref();
-
+const checkedValues = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+  },
+});
 onMounted(async () => {
   const response = await axios.get(`${BASE_API_URL}/productCategories`);
   const data = response.data;
@@ -17,12 +24,7 @@ onMounted(async () => {
   <fieldset class="form__block">
     <legend class="form__legend">Категория</legend>
     <label class="form__label form__label--select">
-      <select
-        class="form__select"
-        type="text"
-        name="category"
-        @change="$emit('update:modelValue', $event.target.value)"
-      >
+      <select class="form__select" name="category" v-model="checkedValues">
         <option value="0">Все категории</option>
         <option v-for="category in categories" :value="category.id" :key="category.id">
           {{ category.title }}
