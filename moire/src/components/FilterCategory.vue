@@ -3,6 +3,7 @@ import { BASE_API_URL } from '../config';
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
+// определяем свойства и события
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 const categories = ref();

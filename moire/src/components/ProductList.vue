@@ -1,6 +1,6 @@
 <script setup>
-import ProductItem from '@/components/ProductItem.vue';
-import ProductsPagination from '@/components/ProductsPagination.vue';
+import ProductItem from './ProductItem.vue';
+import ProductsPagination from './ProductsPagination.vue';
 
 defineProps(['products']);
 </script>

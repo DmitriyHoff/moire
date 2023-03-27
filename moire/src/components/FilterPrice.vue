@@ -10,6 +10,7 @@ defineEmits(['update:priceFrom', 'update:priceTo']);
         class="form__input"
         type="text"
         name="min-price"
+        autocomplete="off"
         :value="priceFrom"
         @input="$emit('update:priceFrom', $event.target.value)"
       />
@@ -20,6 +21,7 @@ defineEmits(['update:priceFrom', 'update:priceTo']);
         class="form__input"
         type="text"
         name="max-price"
+        autocomplete="off"
         :value="priceTo"
         @input="$emit('update:priceTo', $event.target.value)"
       />
