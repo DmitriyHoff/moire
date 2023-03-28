@@ -47,7 +47,6 @@ async function load() {
     </div>
 
     <section class="item">
-      <PageLoader v-if="loading" />
       <ProductGallery :colors="colors" :loading="loading" />
       <div class="item__info">
         <span class="item__code">Артикул: {{ product.id }}</span>

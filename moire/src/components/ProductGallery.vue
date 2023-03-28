@@ -1,24 +1,24 @@
 <script setup>
 import { watch, ref, computed } from 'vue';
-
+import PageLoader from './PageLoader.vue';
 const props = defineProps(['colors', 'loading']);
 const colors = computed(function () {
   return props.colors;
 });
 
-const activeImage = ref();
-
+//const activeImage = ref();
+const selectedIndex = ref(0);
 // Изменим картинку, когда данные будут полностью загружены
-watch(
-  () => props.loading,
-  (loading) => {
-    if (!loading) setActiveImage(props.colors[0].gallery);
-  }
-);
+// watch(
+//   () => props.loading,
+//   (loading) => {
+//     if (!loading) setActiveImage(props.colors[0].gallery);
+//   }
+// );
 
-function setActiveImage(gallery) {
-  activeImage.value = setImageSrc(gallery);
-}
+// function setActiveImage(gallery) {
+//   activeImage.value = setImageSrc(gallery);
+// }
 /**
  *
  * @param {object[]} gallery
@@ -34,17 +34,26 @@ function setImageSrc(gallery) {
 <template>
   <div class="item__pics pics">
     <div class="pics__wrapper">
-      <img width="570" height="570" :src="activeImage" alt="Название товара" ref="img" />
+      <img
+        v-for="(color, index) in colors"
+        :key="color.id"
+        width="570"
+        height="570"
+        :src="setImageSrc(color.gallery)"
+        alt="Название товара"
+        ref="img"
+        :hidden="selectedIndex !== index"
+      />
     </div>
     <ul class="pics__list">
-      <li v-for="color in colors" :key="color.id" class="pics__item">
+      <li v-for="(color, index) in colors" :key="color.id" class="pics__item">
         <a href="" class="pics__link pics__link--current">
           <img
             width="98"
             height="98"
             :src="setImageSrc(color.gallery)"
             :alt="color.color.title"
-            @click.prevent="setActiveImage(color.gallery)"
+            @click.prevent="selectedIndex = index"
           />
         </a>
       </li>
