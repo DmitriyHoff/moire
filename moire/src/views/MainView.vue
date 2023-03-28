@@ -7,9 +7,9 @@ import { onMounted, ref, computed } from 'vue';
 const products = ref({});
 const limit = ref(12);
 const page = ref(1);
-onMounted(async () => {
+(async () => {
   products.value = await ServerApi.getProducts();
-});
+})();
 
 // Строка с количеством товаров
 const productsCountString = computed(() => {

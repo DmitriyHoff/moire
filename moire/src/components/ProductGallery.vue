@@ -47,7 +47,7 @@ function setImageSrc(gallery) {
     </div>
     <ul class="pics__list">
       <li v-for="(color, index) in colors" :key="color.id" class="pics__item">
-        <a href="" class="pics__link pics__link--current">
+        <a href="" class="pics__link" :class="index === selectedIndex ? 'pics__link--current' : ''">
           <img
             width="98"
             height="98"
