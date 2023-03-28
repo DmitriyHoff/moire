@@ -1,23 +1,19 @@
 <script setup>
-import { BASE_API_URL } from '@/config.js';
-import ProductFilter from '@/components/ProductFilter.vue';
-import ProductList from '@/components/ProductList.vue';
+import ProductFilter from '@components/filter/FilterForm.vue';
+import ProductList from '@components/ProductList.vue';
+import ServerApi from '@/ServerApi';
+import { onMounted, ref, computed } from 'vue';
 
-import axios from 'axios';
-import { onMounted, reactive, computed } from 'vue';
-
-const state = reactive({ products: {} });
-
+const products = ref({});
+const limit = ref(12);
+const page = ref(1);
 onMounted(async () => {
-  const response = await axios.get(`${BASE_API_URL}/products`);
-
-  const data = response.data;
-  state.products = data.items;
+  products.value = await ServerApi.getProducts();
 });
 
 // Строка с количеством товаров
 const productsCountString = computed(() => {
-  const count = state.products.length % 100;
+  const count = products.value.length % 100;
   let s = '';
 
   if (count >= 10 && count <= 20) {
@@ -45,7 +41,7 @@ const productsCountString = computed(() => {
 
     <div class="content__catalog">
       <ProductFilter />
-      <ProductList :products="state.products" />
+      <ProductList :products="products" />
     </div>
   </main>
 </template>

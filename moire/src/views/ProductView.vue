@@ -1,22 +1,30 @@
 <script setup>
-import { BASE_API_URL } from '../config.js';
-import BreadcrumbTrail from '../components/BreadcrumbTrail.vue';
-import SizeBox from '../components/SizeBox.vue';
+import BreadcrumbTrail from '@components/BreadcrumbTrail.vue';
+import ProductColors from '@components/ProductColors.vue';
+import ProductGallery from '@components/ProductGallery.vue';
+import ProductInfo from '@components/ProductInfo.vue';
+import ServerApi from '@/ServerApi';
+import SizeBox from '@components/SizeBox.vue';
+
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import axios from 'axios';
-import ProductColors from '../components/ProductColors.vue';
-import ProductGallery from '../components/ProductGallery.vue';
-import ProductInfo from '../components/ProductInfo.vue';
+import { computed } from 'vue';
+import PageLoader from '@/components/PageLoader.vue';
+
+const loading = ref();
 const product = ref({});
 const breadcrumbs = ref([]);
 const route = useRoute();
+const emit = defineEmits(['loadingStart', 'loadingComplete']);
+const colors = computed(function () {
+  return product.value.colors || [];
+});
+load();
 
-onMounted(async () => {
-  const currentPage = `${BASE_API_URL}/products/${route.params.id}`;
-  const response = await axios.get(currentPage);
-  product.value = response.data;
-
+async function load() {
+  loading.value = true;
+  emit('loadingStart');
+  product.value = await ServerApi.getProductById(route.params.id);
   breadcrumbs.value = [
     { title: 'Каталог', route: { name: 'main' } },
     {
@@ -26,11 +34,11 @@ onMounted(async () => {
     {
       title: product.value.title,
       route: { path: '#' },
-      //route: { name: 'product', params: { id: product.value.id } }
     },
   ];
-  console.log(breadcrumbs.value);
-});
+  loading.value = false;
+  emit('loadingComplete');
+}
 </script>
 <template>
   <main class="content container">
@@ -39,8 +47,8 @@ onMounted(async () => {
     </div>
 
     <section class="item">
-      <ProductGallery />
-
+      <PageLoader v-if="loading" />
+      <ProductGallery :colors="colors" :loading="loading" />
       <div class="item__info">
         <span class="item__code">Артикул: {{ product.id }}</span>
         <h2 class="item__title">{{ product.title }}</h2>
@@ -65,7 +73,7 @@ onMounted(async () => {
             <div class="item__row">
               <fieldset class="form__block">
                 <legend class="form__legend">Цвет</legend>
-                <ProductColors :colors="product.colors" />
+                <ProductColors :colors="colors" />
               </fieldset>
 
               <fieldset class="form__block">

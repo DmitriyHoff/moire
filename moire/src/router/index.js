@@ -20,7 +20,7 @@ const router = createRouter({
     },
   ],
   // при переходах полосу прокрутки ставим в начало
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     return { top: 0 };
   },
 });

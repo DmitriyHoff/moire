@@ -1,5 +1,5 @@
 <script setup>
-import { SHOP_PHONE, SHOP_EMAIL } from '../config.js';
+import { SHOP_PHONE, SHOP_EMAIL } from '@/config.js';
 import { RouterLink } from 'vue-router';
 </script>
 <template>

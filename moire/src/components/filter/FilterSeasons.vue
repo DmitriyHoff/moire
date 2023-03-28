@@ -1,7 +1,6 @@
 <script setup>
-import { BASE_API_URL } from '../config';
 import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
+import ServerApi from '@/ServerApi';
 
 // объявляем свойства и события
 const props = defineProps(['modelValue']);
@@ -21,10 +20,7 @@ const checkedValues = computed({
 
 // получаем материалы с API
 onMounted(async () => {
-  const response = await axios.get(`${BASE_API_URL}/seasons`);
-  const data = response.data;
-  seasons.value = data.items;
-  console.log(seasons.value);
+  seasons.value = await ServerApi.getSeasons();
 });
 </script>
 <template>

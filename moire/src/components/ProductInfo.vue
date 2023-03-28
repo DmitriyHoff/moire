@@ -1,5 +1,5 @@
 <script setup>
-import { SHOP_PHONE } from '../config';
+import { SHOP_PHONE } from '@/config';
 import { ref } from 'vue';
 
 const activeItem = ref('about');

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@сomponents/*": ["./src/сomponents/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+
+  "exclude": ["node_modules", "build"]
+}

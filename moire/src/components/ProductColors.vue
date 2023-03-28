@@ -1,5 +1,5 @@
 <script setup>
-defineProps(['colors']);
+defineProps({ colors: { required: true } });
 </script>
 <template>
   <ul class="colors colors--black">

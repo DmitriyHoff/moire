@@ -1,7 +1,6 @@
 <script setup>
-import { BASE_API_URL } from '../config';
 import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
+import ServerApi from '@/ServerApi';
 
 // определяем свойства и события
 const props = defineProps(['modelValue']);
@@ -16,9 +15,7 @@ const checkedValues = computed({
   },
 });
 onMounted(async () => {
-  const response = await axios.get(`${BASE_API_URL}/productCategories`);
-  const data = response.data;
-  categories.value = data.items;
+  categories.value = await ServerApi.getProductCategories();
 });
 </script>
 <template>

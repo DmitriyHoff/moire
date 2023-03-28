@@ -3,6 +3,8 @@ import CategoryFilter from './FilterCategory.vue';
 import PriceFilter from './FilterPrice.vue';
 import MaterialFilter from './FilterMaterial.vue';
 import SeasonsFilter from './FilterSeasons.vue';
+
+import ServerApi from '@/ServerApi';
 import { ref } from 'vue';
 
 // Параметры фильтра
@@ -32,7 +34,12 @@ function reset() {
       <button
         class="filter__submit button button--primery"
         type="submit"
-        @click.prevent="debug(`${materials}|${seasons}`)"
+        @click.prevent="
+          {
+            //console.log(seasons);
+            //ServerApi.getProducts();
+          }
+        "
       >
         Применить
       </button>

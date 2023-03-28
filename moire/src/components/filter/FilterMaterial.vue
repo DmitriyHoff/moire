@@ -1,7 +1,6 @@
 <script setup>
-import { BASE_API_URL } from '../config';
 import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
+import ServerApi from '@/ServerApi';
 
 // объявляем свойства и события
 const props = defineProps(['modelValue']);
@@ -20,9 +19,7 @@ const materials = ref([]);
 
 // получаем материалы с API
 onMounted(async () => {
-  const response = await axios.get(`${BASE_API_URL}/materials`);
-  const data = response.data;
-  materials.value = data.items;
+  materials.value = await ServerApi.getMaterials();
 });
 </script>
 <template>

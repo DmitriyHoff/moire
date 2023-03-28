@@ -91,7 +91,7 @@ body {
 
 img {
   max-width: 100%;
-  height: auto;
+  height: 100%;
   -o-object-fit: contain;
   object-fit: contain
 }
@@ -684,7 +684,8 @@ a {
 }
 
 .pics__wrapper {
-  margin-bottom: 20px
+  margin-bottom: 20px;
+  height: 570px;
 }
 
 .pics__list {
@@ -692,6 +693,7 @@ a {
   padding: 0;
   list-style: none;
   display: grid;
+  align-items: end;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 20px
 }
