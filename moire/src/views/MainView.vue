@@ -25,7 +25,6 @@ watch(
 loadProducts(); // Запрос к серверу
 
 function loadProducts() {
-  console.log('history', history.state);
   // если путь содержит limit и page
   console.log(`${route.params.limit} && ${route.params.page}`);
   if (route.params.limit && route.params.page) {
@@ -33,11 +32,11 @@ function loadProducts() {
     pagination.page = parseInt(route.params.page);
   }
   //запрос продуктов и пагинации
-  console.log(`pagin: ${pagination.pages} && ${route.params.page}`);
+
   ServerApi.getProducts({ page: pagination.page, limit: limit.value }).then((response) => {
     loading.value = true;
     products.value = response.items;
-    //    pagination = response.pagination;
+
     Object.assign(pagination, response.pagination);
     if (route.params.page !== pagination.page) {
       router.replace({
