@@ -4,11 +4,11 @@ import { computed } from 'vue';
 const props = defineProps(['page', 'count', 'perPage']);
 const emit = defineEmits(['pagination']);
 
-const pageCount = computed(() => {
-  return Math.ceil(props.count / props.perPage);
-});
+// const pageCount = computed(() => {
+//   return Math.ceil(props.count / props.perPage);
+// });
 const isNextBtnEnabled = computed(() => {
-  return props.page < pageCount.value;
+  return props.page < props.count;
 });
 const isPrevBtnEnabled = computed(() => {
   return props.page > 1;
@@ -17,7 +17,7 @@ const isPrevBtnEnabled = computed(() => {
 function pagination(arg) {
   let nextPage;
   if (arg === 'next') {
-    if (props.page === pageCount.value) return;
+    if (props.page === props.count) return;
     nextPage = props.page + 1;
   } else if (arg === 'prev') {
     if (props.page === 1) return;
@@ -33,14 +33,15 @@ function pagination(arg) {
   <ul class="catalog__pagination pagination">
     <li class="pagination__item">
       <a
-        class="pagination__link pagination__link--arrow pagination__link--disabled"
+        class="pagination__link pagination__link--arrow"
+        :class="isPrevBtnEnabled ? '' : 'pagination__link--disabled'"
         aria-label="Предыдущая страница"
         @click.prevent="pagination('prev')"
       >
         <svg v-svg symbol="icon-arrow-left" size="0 0 8 14"></svg>
       </a>
     </li>
-    <li class="pagination__item" v-for="pageNumber in pageCount" :key="pageNumber">
+    <li class="pagination__item" v-for="pageNumber in count" :key="pageNumber">
       <a class="pagination__link" :class="{ 'pagination__link--current': pageNumber === page }">
         {{ pageNumber }}
       </a>
@@ -63,6 +64,7 @@ function pagination(arg) {
     <li class="pagination__item">
       <a
         class="pagination__link pagination__link--arrow"
+        :class="isNextBtnEnabled ? '' : 'pagination__link--disabled'"
         href="#"
         aria-label="Следующая страница"
         @click.prevent="pagination('next')"

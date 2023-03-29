@@ -1,15 +1,14 @@
 <script setup>
-import BreadcrumbTrail from '@components/BreadcrumbTrail.vue';
-import ProductColors from '@components/ProductColors.vue';
-import ProductGallery from '@components/ProductGallery.vue';
-import ProductInfo from '@components/ProductInfo.vue';
-import ServerApi from '@/ServerApi';
-import SizeBox from '@components/SizeBox.vue';
+import BreadcrumbTrail from '../components/BreadcrumbTrail.vue';
+import ProductColors from '../components/ProductColors.vue';
+import ProductGallery from '../components/ProductGallery.vue';
+import ProductInfo from '../components/ProductInfo.vue';
+import ServerApi from '..//ServerApi';
+import SizeBox from '../components/SizeBox.vue';
 
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
-import PageLoader from '@/components/PageLoader.vue';
 
 const loading = ref();
 const product = ref({});

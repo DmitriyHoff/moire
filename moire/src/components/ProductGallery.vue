@@ -1,28 +1,12 @@
 <script setup>
-import { watch, ref, computed } from 'vue';
-import PageLoader from './PageLoader.vue';
+import { ref, computed } from 'vue';
 const props = defineProps(['colors', 'loading']);
 const colors = computed(function () {
   return props.colors;
 });
 
-//const activeImage = ref();
 const selectedIndex = ref(0);
-// Изменим картинку, когда данные будут полностью загружены
-// watch(
-//   () => props.loading,
-//   (loading) => {
-//     if (!loading) setActiveImage(props.colors[0].gallery);
-//   }
-// );
 
-// function setActiveImage(gallery) {
-//   activeImage.value = setImageSrc(gallery);
-// }
-/**
- *
- * @param {object[]} gallery
- */
 function setImageSrc(gallery) {
   if (!gallery) {
     return '/src/assets/no-image.svg';

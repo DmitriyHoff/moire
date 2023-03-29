@@ -4,8 +4,10 @@ import PriceFilter from './FilterPrice.vue';
 import MaterialFilter from './FilterMaterial.vue';
 import SeasonsFilter from './FilterSeasons.vue';
 
-import ServerApi from '@/ServerApi';
 import { ref } from 'vue';
+
+// Указывает на изменения в форме
+const hasChange = ref(false);
 
 // Параметры фильтра
 const priceFrom = ref(0);
@@ -21,16 +23,21 @@ function reset() {
   categoryId.value = 0;
   materials.value = [];
   seasons.value = [];
+  hasChange.value = false;
+}
+
+function setChange(value = true) {
+  hasChange.value = value;
 }
 </script>
 
 <template>
   <aside class="filter">
     <form class="filter__form form" action="#" method="get">
-      <PriceFilter v-model:priceFrom="priceFrom" v-model:priceTo="priceTo" />
-      <CategoryFilter v-model="categoryId" />
-      <MaterialFilter v-model="materials" />
-      <SeasonsFilter v-model="seasons" />
+      <PriceFilter v-model:priceFrom="priceFrom" v-model:priceTo="priceTo" @input="setChange()" />
+      <CategoryFilter v-model="categoryId" @change="setChange()" />
+      <MaterialFilter v-model="materials" @change="setChange()" />
+      <SeasonsFilter v-model="seasons" @change="setChange()" />
       <button
         class="filter__submit button button--primery"
         type="submit"
@@ -43,7 +50,12 @@ function reset() {
       >
         Применить
       </button>
-      <button class="filter__reset button button--second" type="button" @click.prevent="reset()">
+      <button
+        v-if="hasChange"
+        class="filter__reset button button--second"
+        type="button"
+        @click.prevent="reset()"
+      >
         Сбросить
       </button>
     </form>

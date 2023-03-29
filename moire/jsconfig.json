@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": ".",
-    "paths": {
-      "@сomponents/*": ["./src/сomponents/*"],
-      "@/*": ["./src/*"]
-    }
+    "allowJs": true
+    // "baseUrl": "./",
+    // "rootDir": "./",
+    // "moduleResolution": "node",
+    // "paths": {
+    //   // "@/*": ["src/*"],
+    //   // "@сomponents/*": ["src/components/*"],
+    //   // "@assets/*": ["src/assets/*"],
+    //   // "@filter/*": ["src/components/filter/*"]
+    // }
   },
-
   "exclude": ["node_modules", "build"]
+  //"include": ["src/*.ts", "src/*.vue", "src/*.ext"]
 }

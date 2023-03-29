@@ -184,9 +184,21 @@ export default class ServerApi {
    * @returns {Product[]}
    */
   static async getProducts(params = null) {
+    let url = '/products';
+
     if (!params) console.log('has no params');
-    const data = await ServerApi.get('/products');
-    return data.items;
+    let query = '?';
+    if (params) {
+      const entries = Object.entries(params).map((x) => `${x[0]}=${x[1]}`);
+
+      entries.forEach((value) => {
+        query += `${value}&`;
+      });
+      url += query.substring(0, query.length - 1);
+    }
+    console.log(url);
+    const data = await ServerApi.get(url);
+    return data;
   }
   /**
    * Получить ключ доступа для пользователя

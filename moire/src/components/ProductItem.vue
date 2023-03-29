@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import ProductColors from '@components/ProductColors.vue';
+import ProductColors from './ProductColors.vue';
 
 defineProps(['product']);
 </script>
@@ -11,7 +11,7 @@ defineProps(['product']);
         :src="
           product.colors[0].gallery
             ? product.colors[0].gallery[0].file.url
-            : './src/assets/no-image.svg'
+            : '/src/assets/no-image.svg'
         "
         :alt="product.title"
       />

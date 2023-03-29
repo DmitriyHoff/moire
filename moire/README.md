@@ -1,35 +1,44 @@
-# moire
+# Moire
 
-This template should help get you started developing with Vue 3 in Vite.
+## Дополнения и улучшения
 
-## Recommended IDE Setup
+### На текущий момент выполнены следующие улучшения:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur)
+* [X] Определение окончания слова 'товар' в зависимости от количества
+* [X] Добален текущий год в блоке Copyrights
+* [X] Реализована галерея без последующей загрузки изображений,
+* [X] Исправлено выравнивания блока выбора цвета в карточке товара
+* [X] Контактная информация вынесена в файл конфигурации
+* [X] SVG-спрайты вынесены в отдельный файл
+* [X] Добавлен значок favicon
 
-## Customize configuration
+## Используемые инструменты
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Vue 3.2
+- Vue Router 4.x
+- Pinia
+- Vite
+- Prettier
+- ESLint
 
-## Project Setup
+## Рекомендуемая конфигурация среды разработки
+
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (и отключить Vetur)
+
+## Установка пакетов
 
 ```sh
-npm install
+npm i
 ```
 
-### Compile and Hot-Reload for Development
+### Сборка и запуск в режиме разработки
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Сборка и минификация для публикации
 
 ```sh
 npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```

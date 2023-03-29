@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import ServerApi from '@/ServerApi';
+import ServerApi from '../../ServerApi';
 
 // объявляем свойства и события
 const props = defineProps(['modelValue']);
