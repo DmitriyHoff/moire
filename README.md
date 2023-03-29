@@ -1,4 +1,7 @@
-# Moire
+
+<img src="./moire/img/svg/logo-moire.svg" alt="moire" width="300"/>
+
+---
 
 ## Дополнения и улучшения
 
