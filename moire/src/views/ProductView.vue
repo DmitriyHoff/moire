@@ -10,8 +10,9 @@ import SKU from '../helpers/sku-generator';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import PageLoader from '../components/PageLoader.vue';
 
-const loading = ref();
+const loading = ref(true);
 const product = ref({});
 const selectedSize = ref();
 const selectedColor = ref();
@@ -54,8 +55,8 @@ async function load() {
     <div class="content__top">
       <BreadcrumbTrail :links="breadcrumbs" />
     </div>
-
-    <section class="item">
+    <PageLoader v-if="loading" />
+    <section v-if="!loading" class="item">
       <ProductGallery :colors="colors" :selected="selectedColor" :loading="loading" />
       <div class="item__info">
         <span class="item__code">Артикул: {{ sku }}</span>

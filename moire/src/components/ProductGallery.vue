@@ -28,7 +28,7 @@ function setImageSrc(gallery) {
         :key="color.id"
         width="570"
         height="570"
-        :src="setImageSrc(color.gallery)"
+        :src="setImageSrc(colors[selectedIndex].gallery)"
         alt="Название товара"
         ref="img"
         :hidden="selectedIndex !== index"

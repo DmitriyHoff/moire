@@ -18,7 +18,9 @@ defineProps(['product']);
     </RouterLink>
 
     <h3 class="catalog__title">
-      <a href="#"> {{ product.title }} </a>
+      <RouterLink class="catalog__pic" :to="{ name: 'product', params: { id: product.id } }">
+        {{ product.title }}
+      </RouterLink>
     </h3>
 
     <span class="catalog__price"> {{ product.price }} ₽ </span>
