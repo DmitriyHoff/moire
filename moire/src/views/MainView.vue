@@ -9,14 +9,12 @@ import { ref, computed, reactive, watch } from 'vue';
 
 const loading = ref(true); // индикатор загрузки
 const products = ref({}); // список продуктов
+const limit = ref(12); // лимит по умолчанию
 const pagination = reactive({
   page: 1,
-  pages: 12,
+  pages: 1,
   total: 0,
 });
-
-//const limit = ref(12); // лимит по умолчанию
-//const currentPage = ref(1); // текущая страница
 
 const router = useRouter();
 const route = useRoute();
@@ -27,22 +25,24 @@ watch(
 loadProducts(); // Запрос к серверу
 
 function loadProducts() {
+  console.log('history', history.state);
   // если путь содержит limit и page
+  console.log(`${route.params.limit} && ${route.params.page}`);
   if (route.params.limit && route.params.page) {
-    pagination.limit = parseInt(route.params.limit);
+    limit.value = parseInt(route.params.limit);
     pagination.page = parseInt(route.params.page);
   }
-
   //запрос продуктов и пагинации
-  ServerApi.getProducts({ page: pagination.page, limit: pagination.limit }).then((response) => {
+  console.log(`pagin: ${pagination.pages} && ${route.params.page}`);
+  ServerApi.getProducts({ page: pagination.page, limit: limit.value }).then((response) => {
     loading.value = true;
     products.value = response.items;
     //    pagination = response.pagination;
     Object.assign(pagination, response.pagination);
     if (route.params.page !== pagination.page) {
       router.replace({
-        to: 'products:limit',
-        params: { limit: pagination.limit, page: pagination.page },
+        name: 'products:limit',
+        params: { limit: limit.value, page: pagination.page },
       });
     }
     loading.value = false;
@@ -51,7 +51,7 @@ function loadProducts() {
 
 // Строка с количеством товаров
 const productsCountString = computed(() => {
-  const count = products.value.length % 100;
+  const count = pagination.total % 100;
   let s = '';
 
   if (count >= 10 && count <= 20) {
@@ -85,12 +85,12 @@ const productsCountString = computed(() => {
         <ProductsPagination
           :page="pagination.page"
           :count="pagination.pages"
-          :perPage="pagination.limit"
+          :perPage="limit"
           @pagination="
             {
               $router.push({
-                to: 'products:limit',
-                params: { limit: pagination.limit, page: $event },
+                name: 'products:limit',
+                params: { limit: limit, page: $event },
               });
             }
           "
