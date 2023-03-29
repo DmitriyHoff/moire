@@ -18,7 +18,7 @@ defineProps(['product']);
     </RouterLink>
 
     <h3 class="catalog__title">
-      <RouterLink class="catalog__pic" :to="{ name: 'product', params: { id: product.id } }">
+      <RouterLink :to="{ name: 'product', params: { id: product.id } }">
         {{ product.title }}
       </RouterLink>
     </h3>
