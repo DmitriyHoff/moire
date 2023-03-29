@@ -14,7 +14,12 @@ import { computed } from 'vue';
 const loading = ref();
 const product = ref({});
 const selectedSize = ref();
-const sku = computed(() => new SKU({ id: product.value.id, color: 12, size: selectedSize.value }));
+const selectedColor = ref();
+const sku = computed(() => {
+  if (product.value && selectedColor.value && selectedSize.value) {
+    return new SKU({ id: product.value.id, color: selectedColor.value, size: selectedSize.value });
+  } else return '';
+});
 const breadcrumbs = ref([]);
 const route = useRoute();
 const emit = defineEmits(['loadingStart', 'loadingComplete']);
@@ -39,7 +44,7 @@ async function load() {
     },
   ];
   selectedSize.value = product.value.sizes[0].id;
-  //sku.value = new SKU({ id: product.value.id, color: 12, size: selectedSize.value });
+  selectedColor.value = product.value.colors[0].color.id;
   loading.value = false;
   emit('loadingComplete');
 }
@@ -51,7 +56,7 @@ async function load() {
     </div>
 
     <section class="item">
-      <ProductGallery :colors="colors" :loading="loading" />
+      <ProductGallery :colors="colors" :selected="selectedColor" :loading="loading" />
       <div class="item__info">
         <span class="item__code">Артикул: {{ sku }}</span>
         <h2 class="item__title">{{ product.title }}</h2>
@@ -76,7 +81,7 @@ async function load() {
             <div class="item__row">
               <fieldset class="form__block">
                 <legend class="form__legend">Цвет</legend>
-                <ProductColors :colors="colors" />
+                <ProductColors :colors="colors" v-model="selectedColor" />
               </fieldset>
 
               <fieldset class="form__block">

@@ -1,12 +1,17 @@
 <script setup>
-import { ref, computed } from 'vue';
-const props = defineProps(['colors', 'loading']);
+import { ref, computed, watch } from 'vue';
+const props = defineProps(['colors', 'selected', 'loading']);
 const colors = computed(function () {
   return props.colors;
 });
 
 const selectedIndex = ref(0);
-
+watch(
+  () => props.selected,
+  () => {
+    selectedIndex.value = props.colors.findIndex((x) => x.id === props.selected);
+  }
+);
 function setImageSrc(gallery) {
   if (!gallery) {
     return '/src/assets/no-image.svg';
