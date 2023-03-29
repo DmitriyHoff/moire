@@ -1,10 +1,10 @@
 <script setup>
 import BreadcrumbTrail from '../components/BreadcrumbTrail.vue';
-import ProductColors from '../components/ProductColors.vue';
-import ProductGallery from '../components/ProductGallery.vue';
-import ProductInfo from '../components/ProductInfo.vue';
+import ProductColors from '../components/product/ProductColors.vue';
+import ProductGallery from '../components/product/ProductGallery.vue';
+import ProductInfo from '../components/product/ProductInfo.vue';
 import ServerApi from '../ServerApi';
-import SizeBox from '../components/SizeBox.vue';
+import SizeSelect from '../components/product/ProductSizeSelect.vue';
 import SKU from '../helpers/sku-generator';
 
 import { ref } from 'vue';
@@ -88,7 +88,7 @@ async function load() {
               <fieldset class="form__block">
                 <legend class="form__legend">Размер</legend>
                 <label class="form__label form__label--small form__label--select">
-                  <SizeBox :size-list="product.sizes" v-model="selectedSize" />
+                  <SizeSelect :size-list="product.sizes" v-model="selectedSize" />
                 </label>
               </fieldset>
             </div>

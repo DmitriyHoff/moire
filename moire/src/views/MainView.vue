@@ -2,8 +2,8 @@
 import { useRoute, useRouter } from 'vue-router';
 import ProductFilter from '../components/filter/FilterForm.vue';
 import PageLoader from '../components/PageLoader.vue';
-import ProductList from '../components/ProductList.vue';
-import ProductsPagination from '../components/ProductsPagination.vue';
+import ProductList from '../components/product/ProductList.vue';
+import ProductsPagination from '../components/product/ProductPagination.vue';
 import ServerApi from '../ServerApi';
 import { ref, computed, reactive, watch } from 'vue';
 
