@@ -1,8 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
+import { h } from 'vue';
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'notFound',
+      component: {
+        render: () => h('div', ['404! Страница не найдена!']),
+      },
+    },
     {
       path: '/',
       name: 'main',

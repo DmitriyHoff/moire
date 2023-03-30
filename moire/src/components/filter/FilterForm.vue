@@ -24,7 +24,7 @@ const queryString = computed(() => ({
   ...(maxPrice.value > 0 ? { maxPrice: maxPrice.value } : {}),
   ...(categoryId.value > 0 ? { categoryId: categoryId.value } : {}),
   ...(materials.value.length > 0 ? { 'materialIds[]': materials.value } : {}),
-  ...(seasons.value.length > 0 ? { 'seasonsIds[]': seasons.value } : {}),
+  ...(seasons.value.length > 0 ? { 'seasonIds[]': seasons.value } : {}),
 }));
 
 // Сброс фильтров

@@ -11,7 +11,7 @@ export default class ServerApi {
    */
   static async get(apiPath) {
     const response = await axios.get(BASE_API_URL + apiPath);
-    console.log('get', response);
+    //console.log('get', response);
     return await response.data;
   }
 
@@ -173,30 +173,43 @@ export default class ServerApi {
    * @typedef ProductsQuery
    * @type {object}
    * @property {number} id Индентификатор категори или слаг
-   * @property {Object<string, number>[]} [materials] Идентификаторы материала
-   * @property {Object<string, number>[]} [seasons]
-   * @property {Object<string, number>[]} [colors]
    * @property {number} [page]
    * @property {number} [limit]
-   * @property {number} [minPrice]
-   * @property {number} [maxPrice]
    * @param {ProductsQuery} params
    * @returns {Product[]}
    */
-  static async getProducts(params = null) {
+  static async getProducts(params, routeQuery = null) {
     let url = '/products';
 
     if (!params) console.log('has no params');
-    let query = '?';
+    let queryPrimary = '?';
     if (params) {
       const entries = Object.entries(params).map((x) => `${x[0]}=${x[1]}`);
 
       entries.forEach((value) => {
-        query += `${value}&`;
+        queryPrimary += `${value}&`;
       });
-      url += query.substring(0, query.length - 1);
+
+      let querySecondary = '';
+      if (routeQuery) {
+        Object.keys(routeQuery).forEach((key) => {
+          if (typeof routeQuery[key] === 'string') {
+            querySecondary += `${key}=${routeQuery[key]}&`;
+          } else {
+            const values = Array.from(routeQuery[key]);
+            values.forEach((val) => {
+              querySecondary += `${key}=${val}&`;
+            });
+          }
+        });
+        //if (querySecondary.charAt(querySecondary.length - 1) === '&')
+        //  querySecondary = querySecondary.substring(0, queryPrimary.length - 1);
+      }
+      url += queryPrimary;
+      url += routeQuery ? querySecondary : '';
+      //queryPrimary.substring(0, queryPrimary.length - 1);
     }
-    console.log(url);
+
     const data = await ServerApi.get(url);
     return data;
   }
