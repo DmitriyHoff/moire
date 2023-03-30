@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import ProductColors from './ProductColors.vue';
+import ProductColors from '../product/ProductColors.vue';
 
 defineProps(['product']);
 </script>
