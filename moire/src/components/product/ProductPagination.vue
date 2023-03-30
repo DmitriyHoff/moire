@@ -4,9 +4,6 @@ import { computed } from 'vue';
 const props = defineProps(['page', 'count', 'perPage']);
 const emit = defineEmits(['pagination']);
 
-// const pageCount = computed(() => {
-//   return Math.ceil(props.count / props.perPage);
-// });
 const isNextBtnEnabled = computed(() => {
   return props.page < props.count;
 });

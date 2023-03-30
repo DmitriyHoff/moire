@@ -1,6 +1,5 @@
 <script setup>
 import { SHOP_PHONE } from '../config.js';
-import { RouterLink } from 'vue-router';
 </script>
 <template>
   <header class="header container">

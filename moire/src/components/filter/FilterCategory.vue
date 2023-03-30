@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import ServerApi from '../../ServerApi';
 
 // определяем свойства и события
@@ -14,9 +14,8 @@ const checkedValues = computed({
     emit('update:modelValue', value);
   },
 });
-onMounted(async () => {
-  categories.value = await ServerApi.getProductCategories();
-});
+
+ServerApi.getProductCategories().then((result) => (categories.value = result));
 </script>
 <template>
   <fieldset class="form__block">

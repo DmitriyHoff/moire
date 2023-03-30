@@ -1,6 +1,5 @@
 <script setup>
 import { SHOP_PHONE, SHOP_EMAIL } from '../config.js';
-import { RouterLink } from 'vue-router';
 </script>
 <template>
   <footer class="footer container">

@@ -31,21 +31,15 @@ function loadProducts() {
     limit.value = parseInt(route.params.limit);
     pagination.page = parseInt(route.params.page);
   }
-  //запрос продуктов и пагинации
 
+  //запрос продуктов и пагинации
   ServerApi.getProducts({ page: pagination.page, limit: limit.value }, route.query).then(
     (response) => {
       loading.value = true;
       products.value = response.items;
 
       Object.assign(pagination, response.pagination);
-      // if (route.params.page !== pagination.page) {
-      //   router.replace({
-      //     name: 'products:limit',
-      //     params: { limit: limit.value, page: pagination.page },
-      //   });
-      // }
-      // console.log(route.query);
+
       loading.value = false;
     }
   );
@@ -89,12 +83,10 @@ const productsCountString = computed(() => {
           :count="pagination.pages"
           :perPage="limit"
           @pagination="
-            {
-              $router.push({
-                name: 'products:limit',
-                params: { limit: limit, page: $event },
-              });
-            }
+            $router.push({
+              name: 'products:limit',
+              params: { limit: limit, page: $event },
+            })
           "
         />
       </section>
