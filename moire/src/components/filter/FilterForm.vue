@@ -19,14 +19,14 @@ const categoryId = ref(0);
 const materials = ref([]);
 const seasons = ref([]);
 
-const seasonsValues = ref([]);
 const queryString = computed(() => ({
   ...(minPrice.value > 0 ? { minPrice: minPrice.value } : {}),
   ...(maxPrice.value > 0 ? { maxPrice: maxPrice.value } : {}),
   ...(categoryId.value > 0 ? { categoryId: categoryId.value } : {}),
-  ...(materials.value.length > 0 ? { 'materials[]': materials.value } : {}),
-  ...(seasons.value.length > 0 ? { 'seasons[]': seasons.value } : {}),
+  ...(materials.value.length > 0 ? { 'materialIds[]': materials.value } : {}),
+  ...(seasons.value.length > 0 ? { 'seasonsIds[]': seasons.value } : {}),
 }));
+
 // Сброс фильтров
 function reset() {
   minPrice.value = 0;
@@ -40,11 +40,6 @@ function reset() {
 }
 
 function setChange(value = true) {
-  console.log('seasons', seasons.value);
-  console.log(
-    'seasons',
-    seasonsValues.value.map((x) => x.id)
-  );
   hasChange.value = value;
 }
 </script>
