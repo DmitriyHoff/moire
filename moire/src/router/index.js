@@ -24,10 +24,6 @@ const router = createRouter({
       component: () => import('../views/ProductView.vue'),
     },
   ],
-  // при переходах полосу прокрутки ставим в начало
-  // scrollBehavior() {
-  //   return { top: 0 };
-  // },
 });
 
 export default router;

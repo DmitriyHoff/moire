@@ -5,28 +5,46 @@ import MaterialFilter from './FilterMaterial.vue';
 import SeasonsFilter from './FilterSeasons.vue';
 
 import { ref } from 'vue';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 // Указывает на изменения в форме
 const hasChange = ref(false);
 
 // Параметры фильтра
-const priceFrom = ref(0);
-const priceTo = ref(5000);
+const minPrice = ref(0);
+const maxPrice = ref(0);
 const categoryId = ref(0);
 const materials = ref([]);
 const seasons = ref([]);
 
+const seasonsValues = ref([]);
+const queryString = computed(() => ({
+  ...(minPrice.value > 0 ? { minPrice: minPrice.value } : {}),
+  ...(maxPrice.value > 0 ? { maxPrice: maxPrice.value } : {}),
+  ...(categoryId.value > 0 ? { categoryId: categoryId.value } : {}),
+  ...(materials.value.length > 0 ? { 'materials[]': materials.value } : {}),
+  ...(seasons.value.length > 0 ? { 'seasons[]': seasons.value } : {}),
+}));
 // Сброс фильтров
 function reset() {
-  priceFrom.value = 0;
-  priceTo.value = 5000;
+  minPrice.value = 0;
+  maxPrice.value = 0;
   categoryId.value = 0;
   materials.value = [];
   seasons.value = [];
   hasChange.value = false;
+
+  router.replace({ query: queryString.value });
 }
 
 function setChange(value = true) {
+  console.log('seasons', seasons.value);
+  console.log(
+    'seasons',
+    seasonsValues.value.map((x) => x.id)
+  );
   hasChange.value = value;
 }
 </script>
@@ -34,19 +52,14 @@ function setChange(value = true) {
 <template>
   <aside class="filter">
     <form class="filter__form form" action="#" method="get">
-      <PriceFilter v-model:priceFrom="priceFrom" v-model:priceTo="priceTo" @input="setChange()" />
+      <PriceFilter v-model:priceFrom="minPrice" v-model:priceTo="maxPrice" @input="setChange()" />
       <CategoryFilter v-model="categoryId" @change="setChange()" />
       <MaterialFilter v-model="materials" @change="setChange()" />
       <SeasonsFilter v-model="seasons" @change="setChange()" />
       <button
         class="filter__submit button button--primery"
         type="submit"
-        @click.prevent="
-          {
-            //console.log(seasons);
-            //ServerApi.getProducts();
-          }
-        "
+        @click.prevent="$router.replace({ query: queryString })"
       >
         Применить
       </button>

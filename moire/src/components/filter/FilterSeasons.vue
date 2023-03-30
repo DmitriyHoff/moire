@@ -1,14 +1,15 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import ServerApi from '../../ServerApi';
 
 // объявляем свойства и события
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 
-// список материалов и выбранные индексы
+// список сезонов
 const seasons = ref([]);
 
+// выбранные индексы
 const checkedValues = computed({
   get() {
     return props.modelValue;
@@ -19,9 +20,7 @@ const checkedValues = computed({
 });
 
 // получаем материалы с API
-onMounted(async () => {
-  seasons.value = await ServerApi.getSeasons();
-});
+ServerApi.getSeasons().then((result) => (seasons.value = result));
 </script>
 <template>
   <fieldset class="form__block">
@@ -36,8 +35,8 @@ onMounted(async () => {
             :value="season.id"
             v-model="checkedValues"
           />
-          <span class="check-list__desc">
-            {{ season.title }}
+          <span class="check-list__desc"
+            >{{ season.title }}
             <span>({{ season.productsCount }})</span>
           </span>
         </label>

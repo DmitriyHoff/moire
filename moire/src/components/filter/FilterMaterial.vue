@@ -1,11 +1,15 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import ServerApi from '../../ServerApi';
 
 // объявляем свойства и события
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 
+// список материалов
+const materials = ref([]);
+
+// выбранные индексы
 const checkedValues = computed({
   get() {
     return props.modelValue;
@@ -14,13 +18,9 @@ const checkedValues = computed({
     emit('update:modelValue', value);
   },
 });
-// список материалов и выбранные индексы
-const materials = ref([]);
 
 // получаем материалы с API
-onMounted(async () => {
-  materials.value = await ServerApi.getMaterials();
-});
+ServerApi.getMaterials().then((result) => (materials.value = result));
 </script>
 <template>
   <fieldset class="form__block">

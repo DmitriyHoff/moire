@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import ProductFilter from '../components/filter/FilterForm.vue';
 import PageLoader from '../components/PageLoader.vue';
 import ProductList from '../components/product/ProductList.vue';
@@ -16,10 +16,11 @@ const pagination = reactive({
   total: 0,
 });
 
-const router = useRouter();
 const route = useRoute();
 watch(
-  () => route.params,
+  () => {
+    return { params: route.params, query: route.query };
+  },
   () => loadProducts()
 );
 loadProducts(); // Запрос к серверу
@@ -38,12 +39,12 @@ function loadProducts() {
     products.value = response.items;
 
     Object.assign(pagination, response.pagination);
-    if (route.params.page !== pagination.page) {
-      router.replace({
-        name: 'products:limit',
-        params: { limit: limit.value, page: pagination.page },
-      });
-    }
+    // if (route.params.page !== pagination.page) {
+    //   router.replace({
+    //     name: 'products:limit',
+    //     params: { limit: limit.value, page: pagination.page },
+    //   });
+    // }
     loading.value = false;
   });
 }
