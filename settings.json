@@ -1,6 +1,0 @@
-{
-  /** non-relative: предпочитает не относительный импорт на основе `baseUrl` или `paths`,
-   *  настроенных в файле jsconfig.json / tsconfig.json. */
-  //"javascript.preferences.importModuleSpecifier": "non-relative"
-  "liveServer.settings.root": "/moire/dist"
-}
