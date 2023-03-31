@@ -13,7 +13,9 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      redirect: () => 'products',
+      redirect: () => {
+        return { name: 'products' };
+      },
     },
     {
       path: '/products',
