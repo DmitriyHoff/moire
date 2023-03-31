@@ -21,7 +21,7 @@
 
 - Vue 3.2
 - Vue Router 4.x
-- Pinia
+- Pinia <img src="https://pinia.vuejs.org/logo.svg" height="20" />
 - Vite
 - Prettier
 - ESLint

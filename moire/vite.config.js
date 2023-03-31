@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {},
+    extensions: ['.js', '.ts', '.tsx', '.jsx', '.css'],
   },
 });

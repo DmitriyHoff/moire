@@ -147,7 +147,7 @@ a {
   font-size: 13px
 }
 
-.button--primery:not(:disabled):focus,
+.button--primery:not(:disabled):focus-visible,
 .button--primery:not(:disabled):hover {
   background-color: #150c26
 }

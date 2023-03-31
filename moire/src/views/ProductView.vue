@@ -7,11 +7,14 @@ import ServerApi from '../ServerApi';
 import SizeSelect from '../components/product/ProductSizeSelect.vue';
 import SKU from '../helpers/sku-generator';
 
+import { useCounterStore } from '../stores/counter';
+
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import PageLoader from '../components/PageLoader.vue';
 
+const store = useCounterStore();
 const loading = ref(true);
 const product = ref({});
 const selectedSize = ref();
@@ -93,7 +96,13 @@ async function load() {
               </fieldset>
             </div>
 
-            <button class="item__button button button--primery" type="submit">В корзину</button>
+            <button
+              class="item__button button button--primery"
+              type="submit"
+              @click.prevent="store.increment()"
+            >
+              В корзину
+            </button>
           </form>
         </div>
       </div>
