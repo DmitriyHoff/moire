@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
   plugins: [vue()],
   base: '/moire/',
+  publicPath: '/moire/',
   resolve: {
     alias: {},
   },
