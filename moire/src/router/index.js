@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { h } from 'vue';
 
-const baseUrl = location.pathname;
+// const baseUrl = location.pathname;
 const router = createRouter({
-  history: createWebHistory(baseUrl),
+  history: createWebHistory(),
   routes: [
     {
       path: '/:pathMatch(.*)*',
@@ -40,9 +40,6 @@ const router = createRouter({
       component: () => import('../views/CartView.vue'),
     },
   ],
-});
-router.beforeEach(() => {
-  console.log(baseUrl);
 });
 
 export default router;
