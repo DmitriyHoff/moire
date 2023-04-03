@@ -3,22 +3,22 @@ import BreadcrumbTrail from '../components/BreadcrumbTrail.vue';
 import ProductColors from '../components/product/ProductColors.vue';
 import ProductGallery from '../components/product/ProductGallery.vue';
 import ProductInfo from '../components/product/ProductInfo.vue';
-import ServerApi from '../ServerApi';
 import SizeSelect from '../components/product/ProductSizeSelect.vue';
-import SKU from '../helpers/sku-generator';
-
-import { useCounterStore } from '../stores/counter';
-
-import { ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { computed } from 'vue';
+import ProductCounter from '../components/product/ProductCounter.vue';
 import PageLoader from '../components/PageLoader.vue';
 
-const store = useCounterStore();
+import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useCartStore } from '../stores/counter';
+import SKU from '../helpers/sku-generator';
+import ServerApi from '../helpers/server-api';
+
+const store = useCartStore();
 const loading = ref(true);
 const product = ref({});
 const selectedSize = ref();
 const selectedColor = ref();
+const amount = ref(1);
 const sku = computed(() => {
   if (product.value && selectedColor.value && selectedSize.value) {
     return new SKU({ id: product.value.id, color: selectedColor.value, size: selectedSize.value });
@@ -48,9 +48,28 @@ async function load() {
     },
   ];
   selectedSize.value = product.value.sizes[0].id;
-  selectedColor.value = product.value.colors[0].color.id;
+  selectedColor.value = product.value.colors[0].id;
+  console.log('color', selectedColor.value);
   loading.value = false;
   emit('loadingComplete');
+}
+function addProduct() {
+  ServerApi.addProductToBasket(
+    {
+      productId: product.value.id,
+      colorId: getSubColorId(selectedColor.value),
+      sizeId: selectedSize.value,
+      quantity: amount.value,
+    },
+    store.user?.accessKey
+  ).then((result) => {
+    Object.assign(store.cart, result);
+    store.user = store.cart.user;
+  });
+}
+
+function getSubColorId(colorId) {
+  return colors.value.find((element) => element.id === colorId).color.id;
 }
 </script>
 <template>
@@ -67,17 +86,7 @@ async function load() {
         <div class="item__form">
           <form class="form" action="#" method="POST">
             <div class="item__row item__row--center">
-              <div class="form__counter">
-                <button type="button" aria-label="Убрать один товар">
-                  <svg v-svg symbol="icon-minus" size="0 0 12 12"></svg>
-                </button>
-
-                <input type="text" value="1" name="count" />
-
-                <button type="button" aria-label="Добавить один товар">
-                  <svg v-svg symbol="icon-plus" size="0 0 12 12"></svg>
-                </button>
-              </div>
+              <ProductCounter v-model="amount" />
 
               <b class="item__price"> {{ product.price }} ₽ </b>
             </div>
@@ -99,7 +108,7 @@ async function load() {
             <button
               class="item__button button button--primery"
               type="submit"
-              @click.prevent="store.increment()"
+              @click.prevent="addProduct"
             >
               В корзину
             </button>

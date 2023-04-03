@@ -25,27 +25,27 @@ import { SHOP_PHONE, SHOP_EMAIL } from '../config.js';
       <ul class="footer__social social">
         <li class="social__item">
           <a class="social__link" href="#" aria-label="Вконтакте">
-            <svg v-svg symbol="icon-vk" size="0 0 20 11"></svg>
+            <svg v-svg symbol="icon-vk" size="20 11"></svg>
           </a>
         </li>
         <li class="social__item">
           <a class="social__link" href="#" aria-label="Инстаграм">
-            <svg v-svg symbol="icon-insta" size="0 0 17 17"></svg>
+            <svg v-svg symbol="icon-insta" size="17 17"></svg>
           </a>
         </li>
         <li class="social__item">
           <a class="social__link" href="#" aria-label="Facebook">
-            <svg v-svg symbol="icon-facebook" size="0 0 17 17"></svg>
+            <svg v-svg symbol="icon-facebook" size="17 17"></svg>
           </a>
         </li>
         <li class="social__item">
           <a class="social__link" href="#" aria-label="Twitter">
-            <svg v-svg symbol="icon-twitter" size="0 0 17 14"></svg>
+            <svg v-svg symbol="icon-twitter" size="17 14"></svg>
           </a>
         </li>
         <li class="social__item">
           <a class="social__link" href="#" aria-label="Telegram">
-            <svg v-svg symbol="icon-telegram" size="0 0 19 17"></svg>
+            <svg v-svg symbol="icon-telegram" size="19 17"></svg>
           </a>
         </li>
       </ul>

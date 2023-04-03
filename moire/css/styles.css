@@ -152,6 +152,10 @@ a {
   background-color: #150c26
 }
 
+.button--primery:not(:disabled):active {
+  background-color: #e02d71;
+}
+
 .button--second {
   background-color: transparent;
   border: 1px solid #222;
@@ -160,7 +164,7 @@ a {
   font-size: 14px
 }
 
-.button--second:not(:disabled):focus,
+.button--second:not(:disabled):focus-visible,
 .button--second:not(:disabled):hover {
   background-color: #222;
   color: #fff
@@ -225,10 +229,10 @@ a {
   right: 0;
   background-color: #e02d71;
   padding: 3px;
-  min-width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  font-size: 7px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  font-size: 10px;
   line-height: 1;
   font-weight: 500;
   color: #fff;
@@ -454,10 +458,15 @@ a {
   transition: all .2s ease
 }
 
-.form__counter button:focus,
+.form__counter button:focus-visible,
 .form__counter button:hover {
   background-color: #222;
-  color: #fff
+  color: #fff;
+  border: none;
+}
+
+.form__counter button:active {
+  background-color: #e02d71;
 }
 
 .form__counter input {
@@ -538,7 +547,7 @@ a {
 
 .colors__value,
 .colors__value::before {
-  border-radius: 50%;
+  /* border-radius: 50%; */
   -webkit-transition: all .2s ease;
   transition: all .2s ease
 }
@@ -1373,9 +1382,13 @@ a {
   color: #d9d9d9
 }
 
-.social__link:focus,
+.social__link:focus-visible,
 .social__link:hover {
   color: #e02d71
+}
+
+.social__link:active {
+  color: #150c26;
 }
 
 .footer__wrapper {

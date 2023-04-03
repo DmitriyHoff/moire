@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { h } from 'vue';
-
 // const baseUrl = location.pathname;
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,4 +41,5 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach(() => {});
 export default router;

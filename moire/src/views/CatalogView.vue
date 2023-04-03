@@ -4,7 +4,7 @@ import ProductFilter from '../components/filter/FilterForm.vue';
 import PageLoader from '../components/PageLoader.vue';
 import ProductList from '../components/catalog/CatalogList.vue';
 import ProductsPagination from '../components/catalog/CatalogPagination.vue';
-import ServerApi from '../ServerApi';
+import ServerApi from '../helpers/server-api';
 import { ref, computed, reactive, watch } from 'vue';
 
 const loading = ref(true); // индикатор загрузки
@@ -17,12 +17,12 @@ const pagination = reactive({
 });
 
 const route = useRoute();
-watch(
-  () => {
-    return { params: route.params, query: route.query };
-  },
-  () => loadProducts()
-);
+
+// Следим за изменениями строки запроса
+watch(() => {
+  return { params: route.params, query: route.query };
+}, loadProducts);
+
 loadProducts(); // Запрос к серверу
 
 function loadProducts() {
@@ -35,6 +35,7 @@ function loadProducts() {
   //запрос продуктов и пагинации
   ServerApi.getProducts({ page: pagination.page, limit: limit.value }, route.query).then(
     (response) => {
+      console.log(response);
       loading.value = true;
       products.value = response.items;
 
@@ -53,7 +54,7 @@ const productsCountString = computed(() => {
   if (count >= 10 && count <= 20) {
     s = 'товаров';
   } else if (count % 10 === 1) {
-    // s = 'товар';
+    s = 'товар';
   } else if (count % 10 > 1 && count % 10 < 5) {
     s = 'товара';
   } else {

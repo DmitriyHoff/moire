@@ -1,13 +1,18 @@
-import { ref, computed } from 'vue';
+import { computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
-import { useStorage } from '@vueuse/core'; // ✨
-export const useCounterStore = defineStore('cart', () => {
-  const count = ref(0);
-  const name = ref('Eduardo');
-  const doubleCount = computed(() => count.value * 2);
-  function increment() {
-    count.value++;
-  }
-  const state = useStorage('cart', { count, name });
-  return { count, name, doubleCount, increment, state };
+
+export const useCartStore = defineStore('cart', () => {
+  const user = computed({
+    get() {
+      return JSON.parse(localStorage.getItem('user'));
+    },
+    set(userInfo) {
+      localStorage.setItem('user', JSON.stringify(userInfo));
+    },
+  });
+  const cart = reactive({});
+  const count = computed(() =>
+    cart.items ? cart.items.reduce((acc, current) => (acc += current.quantity), 0) : 0
+  );
+  return { user, cart, count };
 });
