@@ -81,7 +81,11 @@ function sendNewValue(isLast = false) {
         <span class="product__code">
           Артикул:
           {{
-            new SKU({ id: item.product.id, color: item.color.color.id, size: item.size.id })
+            new SKU({
+              id: item.product.id,
+              color: item.color.color.id,
+              size: item.size.id,
+            }).toString()
           }}</span
         >
       </div>
