@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import SKU from '../../helpers/sku-generator';
 import ServerApi from '../../helpers/server-api';
 import getColorTranslate from '../../helpers/color-dictionary';
@@ -12,6 +12,13 @@ const props = defineProps(['item']);
 const emit = defineEmits(['update:cart', 'confirm:delete']);
 const product = ref(props.item.product);
 const amount = ref(props.item.quantity);
+const sku = ref(
+  new SKU({
+    id: product.value.id,
+    color: props.item.color.color.id,
+    size: props.item.size.id,
+  }).toString()
+);
 console.log('product', props.item);
 let timerId;
 
@@ -80,13 +87,7 @@ function sendNewValue(isLast = false) {
         <!-- <span class="product__size"> Размер: {{ item.size.title }}</span> -->
         <span class="product__code">
           Артикул:
-          {{
-            new SKU({
-              id: item.product.id,
-              color: item.color.color.id,
-              size: item.size.id,
-            }).toString()
-          }}</span
+          {{ sku }}</span
         >
       </div>
       <div class="product__counter form__counter">
