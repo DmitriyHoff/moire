@@ -16,14 +16,15 @@ defineProps(['product']);
         :alt="product.title"
       />
     </RouterLink>
+    <div class="catalog__item-content">
+      <h3 class="catalog__title">
+        <RouterLink :to="{ name: 'product', params: { id: product.id } }">
+          {{ product.title }}
+        </RouterLink>
+      </h3>
 
-    <h3 class="catalog__title">
-      <RouterLink :to="{ name: 'product', params: { id: product.id } }">
-        {{ product.title }}
-      </RouterLink>
-    </h3>
-
-    <span class="catalog__price"> {{ product.price }} ₽ </span>
-    <ProductColors :colors="product.colors" />
+      <span class="catalog__price"> {{ product.price }} ₽ </span>
+      <ProductColors :colors="product.colors" />
+    </div>
   </li>
 </template>

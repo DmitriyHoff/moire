@@ -25,7 +25,6 @@ export default class ServerApi {
    * @returns {object}
    */
   static async post(apiPath, body) {
-    console.log(BASE_API_URL + apiPath);
     const response = await axios.post(BASE_API_URL + apiPath, body);
     if (response.status === 200) return response.data;
     else {
@@ -41,7 +40,7 @@ export default class ServerApi {
    * @returns {object}
    */
   static async put(apiPath, body) {
-    const response = await axios.post(BASE_API_URL + apiPath, body);
+    const response = await axios.put(BASE_API_URL + apiPath, body);
     if (response.status === 200) return response.data;
     else {
       console.log(response.data);
@@ -56,7 +55,11 @@ export default class ServerApi {
    * @returns {object}
    */
   static async delete(apiPath, body) {
-    const response = await axios.delete(BASE_API_URL + apiPath, body);
+    /**
+     * метод axios.delete() не работает с payload
+     */
+    const response = await axios.delete(BASE_API_URL + apiPath, { data: body });
+    //const response = axios.request({ url: BASE_API_URL + apiPath, data: body, method: 'delete' });
     if (response.status === 200) return response.data;
     else {
       console.log(response.data);
@@ -323,9 +326,11 @@ export default class ServerApi {
    * @returns {object}
    */
   static async deleteBasketProduct(basketItemId, userAccessKey) {
+    //const body = {};
+    //body['basketItemId'] = basketItemId;
     return await ServerApi.delete(
       '/baskets/products' + (userAccessKey ? `?userAccessKey=${userAccessKey}` : ''),
-      { basketItemId }
+      { basketItemId: basketItemId }
     );
   }
 }

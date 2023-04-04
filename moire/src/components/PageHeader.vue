@@ -7,12 +7,7 @@ import CartCounter from './cart/CartCounterIcon.vue';
     <div class="header__wrapper">
       <span class="header__info">Каталог</span>
       <RouterLink class="header__logo" :to="{ name: 'main' }">
-        <img
-          src="/img/svg/logo-moire.svg"
-          alt="Логотип интернет магазина Moire"
-          width="116"
-          height="34"
-        />
+        <svg v-svg symbol="logo" size="116 34"></svg>
       </RouterLink>
       <a class="header__tel" :href="`tel:${SHOP_PHONE}`">{{ SHOP_PHONE }}</a>
       <CartCounter />

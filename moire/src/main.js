@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { svgSpriteDirectivePlugin } from 'vue-svg-sprite';
