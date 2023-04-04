@@ -1,7 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import CartItem from '../components/cart/CartItem.vue';
-import ConfirmWindow from '../components/ConfirmWindow.vue';
 import { useCartStore } from '../stores/counter';
 import ServerApi from '../helpers/server-api';
 import { ref, computed } from 'vue';
