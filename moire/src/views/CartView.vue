@@ -3,10 +3,9 @@ import { storeToRefs } from 'pinia';
 import CartItem from '../components/cart/CartItem.vue';
 import { useCartStore } from '../stores/counter';
 import ServerApi from '../helpers/server-api';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 const store = useCartStore();
 const { user, cart } = storeToRefs(store);
-
 console.log('cart:', cart.value);
 
 // индикатор загрузки
@@ -20,6 +19,9 @@ if (user.value?.accessKey) {
     loading.value = false; // страница загружена
   });
 }
+const totalPrice = computed(() => {
+  return cart.value.items.reduce((acc, item) => (acc += item.price * item.quantity), 0);
+});
 </script>
 <template>
   <main class="content container">
@@ -34,7 +36,9 @@ if (user.value?.accessKey) {
 
         <div class="cart__block">
           <p class="cart__desc">Мы&nbsp;посчитаем стоимость доставки на&nbsp;следующем этапе</p>
-          <p class="cart__price">Итого: <span>4 070 ₽</span></p>
+          <p class="cart__price">
+            Итого: <span>{{ totalPrice }} ₽</span>
+          </p>
 
           <button class="cart__button button button--primery" type="submit">Оформить заказ</button>
         </div>

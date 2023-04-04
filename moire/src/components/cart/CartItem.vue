@@ -1,7 +1,7 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import getColorTranslate from '../../helpers/color-dictionary';
-// import SKU from '../../helpers/sku-generator';
+import SKU from '../../helpers/sku-generator';
 
 const props = defineProps(['item']);
 const product = ref(props.item.product);
@@ -11,9 +11,11 @@ console.log('product', props.item);
 <template>
   <li class="cart__item product">
     <div class="product__pic">
-      <img src="../../../img/product-square-4.jpg" width="120" height="120" alt="Название товара" />
+      <img :src="item.color.gallery[0].file.url" width="120" height="120" :alt="item.title" />
     </div>
-    <h3 class="product__title">{{ product.title }}</h3>
+    <div class="product__title-wrap">
+      <h3 class="product__title">{{ product.title }}</h3>
+    </div>
     <p class="product__info product__info--color">
       Цвет:
       <span>
@@ -21,7 +23,16 @@ console.log('product', props.item);
         {{ getColorTranslate(item.color.color.title) }}
       </span>
     </p>
-    <span class="product__code"> Артикул: {{ (product.id, product.color) }}</span>
+    <p class="product__size">
+      Размер:
+      <span> {{ item.size.title }}</span>
+    </p>
+
+    <!-- <span class="product__size"> Размер: {{ item.size.title }}</span> -->
+    <span class="product__code">
+      Артикул:
+      {{ new SKU({ id: item.product.id, color: item.color.color.id, size: item.size.id }) }}</span
+    >
 
     <div class="product__counter form__counter">
       <button type="button" aria-label="Убрать один товар">
@@ -38,7 +49,7 @@ console.log('product', props.item);
     <b class="product__price"> {{ product.price }}₽ </b>
 
     <button class="product__del button-del" type="button" aria-label="Удалить товар из корзины">
-      <svg v-svg size="10 10" symbol="icon-close"></svg>
+      <svg v-svg size="18 18" symbol="icon-close"></svg>
     </button>
   </li>
 </template>
