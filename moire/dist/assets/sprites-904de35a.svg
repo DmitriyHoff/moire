@@ -58,9 +58,6 @@
       fill="currentColor"></path>
   </symbol>
 
-  <symbol id="icon-arrow-bottom" width="10" height="6">
-    <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-linecap="round" />
-  </symbol>
 
   <symbol id="logo" width="116" height="34">
 

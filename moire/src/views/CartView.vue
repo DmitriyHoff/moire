@@ -62,7 +62,7 @@ function updateCart(newCart) {
           <button
             class="cart__button button button--primery"
             type="submit"
-            @click.prevent="() => $router.push({ name: 'order' })"
+            @click.prevent="() => $router.push({ name: 'checkout' })"
           >
             Оформить заказ
           </button>
