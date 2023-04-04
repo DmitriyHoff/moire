@@ -4,8 +4,8 @@ import ServerApi from '../../helpers/server-api';
 import { storeToRefs } from 'pinia';
 
 const store = useCartStore();
-const { user } = storeToRefs(store);
-const { count } = storeToRefs(store);
+const { user, count } = storeToRefs(store);
+
 if (user.value?.accessKey) {
   ServerApi.getBasket(user.value.accessKey).then((result) => {
     Object.assign(store.cart, result);

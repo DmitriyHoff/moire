@@ -7,7 +7,7 @@ import { ref } from 'vue';
 const store = useCartStore();
 const { user, cart } = storeToRefs(store);
 
-console.log('user in cart:', user);
+console.log('cart:', cart.value);
 
 // индикатор загрузки
 const loading = ref(false);
@@ -20,8 +20,6 @@ if (user.value?.accessKey) {
     loading.value = false; // страница загружена
   });
 }
-
-console.log('store', store.count);
 </script>
 <template>
   <main class="content container">
