@@ -20,7 +20,7 @@ const sku = ref(
     size: props.item.size.id,
   }).toString()
 );
-console.log('product', props.item);
+
 let timerId;
 
 // Увеличивает количество товара
@@ -47,16 +47,15 @@ function sendNewValue(isLast = false) {
 
   // выполним запрос, когда пользователь завершил ввод
   timerId = setTimeout(() => {
+    const user = store.getUser();
     if (!isLast) {
-      ServerApi.changeBasketQuantity(props.item.id, amount.value, store.user.accessKey).then(
+      ServerApi.changeBasketQuantity(props.item.id, amount.value, user?.accessKey).then(
         (result) => {
-          console.log(result);
           emit('update:cart', result);
         }
       );
     } else {
-      ServerApi.deleteBasketProduct(props.item.id, store.user.accessKey).then((result) => {
-        console.log('DELETE', result);
+      ServerApi.deleteBasketProduct(props.item.id, user?.accessKey).then((result) => {
         emit('update:cart', result);
       });
     }

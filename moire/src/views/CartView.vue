@@ -1,26 +1,26 @@
 <script setup>
-import { storeToRefs } from 'pinia';
 import CartItem from '../components/cart/CartItem.vue';
 import { useCartStore } from '../stores/counter';
 import ServerApi from '../helpers/server-api';
 import { ref, computed } from 'vue';
 import BreadcrumbTrail from '../components/BreadcrumbTrail.vue';
+
 const store = useCartStore();
-const { user, cart } = storeToRefs(store);
-console.log('cart:', cart.value);
 
 // индикатор загрузки
 const loading = ref(false);
-if (user.value?.accessKey) {
+const user = store.getUser();
+
+if (user?.accessKey) {
   loading.value = true; // указываем, что страница загружается
-  ServerApi.getBasket(user.value.accessKey).then((result) => {
-    Object.assign(cart, result);
-    store.user = user;
+  ServerApi.getBasket(user.accessKey).then((result) => {
+    Object.assign(store.cart, result);
+    store.setUser(store.cart.user);
     loading.value = false; // страница загружена
   });
 }
 const totalPrice = computed(() => {
-  return cart.value.items.reduce((acc, item) => (acc += item.price * item.quantity), 0);
+  return store.cart.items.reduce((acc, item) => (acc += item.price * item.quantity), 0);
 });
 const breadcrumbs = ref([
   { title: 'Каталог', route: { name: 'main' } },

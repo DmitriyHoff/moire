@@ -58,6 +58,8 @@ async function load() {
   emit('loadingComplete');
 }
 function addProduct() {
+  console.log('add_amount', amount.value);
+  console.log('accessKey:', store.user?.accessKey);
   ServerApi.addProductToBasket(
     {
       productId: product.value.id,
@@ -65,10 +67,14 @@ function addProduct() {
       sizeId: selectedSize.value,
       quantity: amount.value,
     },
-    store.user?.accessKey
+    store.getUser()?.accessKey
   ).then((result) => {
     Object.assign(store.cart, result);
-    store.user = store.cart.user;
+    console.log('store.cart.user:', store.cart.user);
+    store.setUser(store.cart.user);
+    console.log('store.user:', store.getUser());
+    //    console.log('add_amount', amount.value);
+    console.log('accessKey:', store.getUser()?.accessKey);
   });
 }
 
