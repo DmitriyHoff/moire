@@ -1002,7 +1002,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  font-weight: bold;
+  font-weight: 500;
   height: 40px;
 }
 

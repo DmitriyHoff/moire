@@ -9,7 +9,6 @@ export default class SKU {
     this._id = id;
     this._color = color;
     this._size = size;
-    console.log(`${id}|${color}|${size}`);
   }
 
   toString() {

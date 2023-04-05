@@ -1,10 +1,10 @@
 <script setup>
-import ProductItem from './CatalogItem.vue';
+import CatalogItem from './CatalogItem.vue';
 defineProps(['products']);
 </script>
 
 <template>
   <ul class="catalog__list">
-    <ProductItem v-for="product in products" :product="product" :key="product.id" />
+    <CatalogItem v-for="product in products" :product="product" :key="product.id" />
   </ul>
 </template>
