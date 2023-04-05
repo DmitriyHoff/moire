@@ -16,4 +16,9 @@ export default class SKU {
       .toString()
       .padStart(2, '0')}${this._size.toString().padStart(2, '0')}`;
   }
+  static get({ id, color, size }) {
+    return `${id.toString().padStart(3, '0')}${color.toString().padStart(2, '0')}${size
+      .toString()
+      .padStart(2, '0')}`;
+  }
 }

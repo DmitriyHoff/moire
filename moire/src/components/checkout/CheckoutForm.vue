@@ -65,11 +65,11 @@ const hasError = ref(false);
           <span
             >Артикул:
             {{
-              new SKU({
+              SKU.get({
                 id: item.product.id,
                 color: item.color.color.id,
                 size: item.size.id,
-              }).toString()
+              })
             }}</span
           >
         </li>
