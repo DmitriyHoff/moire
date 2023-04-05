@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
-const noimgUrl = new URL('../../assets/no-image.svg', import.meta.url).href;
+import noimgUrl from '../../assets/no-image.svg';
 
 const props = defineProps(['colors', 'selected', 'loading']);
 const colors = computed(function () {

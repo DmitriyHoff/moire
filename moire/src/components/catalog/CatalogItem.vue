@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import ProductColors from '../product/ProductColors.vue';
-const noimgUrl = new URL('../../assets/no-image.svg', import.meta.url).href;
+import noimgUrl from '../../assets/no-image.svg';
 defineProps(['product']);
 </script>
 <template>
