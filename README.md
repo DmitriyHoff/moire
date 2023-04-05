@@ -1,5 +1,5 @@
 
-<img src="./moire/img/svg/logo-moire.svg" alt="moire" width="300"/>
+<img src="./moire/public/logo-moire.svg" alt="moire" width="300"/>
 
 ---
 
@@ -17,15 +17,14 @@
 * [X] Реализовано изменение URL в адресной строке
 * [X] Добавлен генератор SKU-кодов (артикулов)
 * [X] Исправлены стили кнопок
+* [X] Кнопка удаления товара из корзины интергрирована в к кнопку "минус"
 
 ## Используемые инструменты
-
-- Vue 3.2
-- Vue Router 4.x
-- Pinia <img src="https://pinia.vuejs.org/logo.svg" height="20" />
-- Vite <img src="https://vitejs.dev/logo.svg" height="20">
-- Prettier
-- ESLint
+[<img src="https://router.vuejs.org/logo.svg" height="36" />](https://router.vuejs.org)
+[<img src="https://pinia.vuejs.org/logo.svg" height="40" />](https://pinia.vuejs.org)
+[<img src="https://vitejs.dev/logo.svg" height="40" />](https://vitejs.dev)
+[<img src="https://prettier.io/icon.png" height="40" />](https://prettier.io)
+[<img src="https://cdn.freebiesupply.com/logos/large/2x/eslint-1-logo-png-transparent.png" height="40" />](https://eslint.org)
 
 ## Рекомендуемая конфигурация среды разработки
 
