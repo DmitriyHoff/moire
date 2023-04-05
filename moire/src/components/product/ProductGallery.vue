@@ -1,5 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
+const noimgUrl = new URL('../../assets/no-image.svg', import.meta.url).href;
+
 const props = defineProps(['colors', 'selected', 'loading']);
 const colors = computed(function () {
   return props.colors;
@@ -14,7 +16,7 @@ watch(
 );
 function setImageSrc(gallery) {
   if (!gallery) {
-    return '/src/assets/no-image.svg';
+    return noimgUrl;
   } else {
     return gallery[0]?.file.url;
   }

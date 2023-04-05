@@ -4,10 +4,32 @@ import CheckoutPayment from './CheckoutPayment.vue';
 import SKU from '../../helpers/sku-generator';
 
 import { useCartStore } from '../../stores/counter';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+import ServerApi from '../../helpers/server-api';
 
 const store = useCartStore();
 const hasError = ref(false);
+
+const orderInfo = reactive({
+  name: '',
+  address: '',
+  phone: '',
+  email: '',
+  deliveryTypeId: 0,
+  paymentTypeId: 0,
+  comment: '',
+});
+function submit() {
+  ServerApi.makeOrder(store.user.accessKey, {
+    name: 'string',
+    address: 'string',
+    phone: 'string',
+    email: 'string',
+    deliveryTypeId: 0,
+    paymentTypeId: 0,
+    comment: 'string',
+  });
+}
 </script>
 <template>
   <form class="cart__form form" action="#" method="POST">
@@ -82,9 +104,11 @@ const hasError = ref(false);
         </p>
       </div>
 
-      <button class="cart__button button button--primery" type="submit">Оформить заказ</button>
+      <button class="cart__button button button--primery" type="submit" @click.prevent="submit">
+        Оформить заказ
+      </button>
     </div>
-    <div class="cart__error form__error-block">
+    <div v-if="hasError" class="cart__error form__error-block">
       <h4>Заявка не отправлена!</h4>
       <p>Похоже произошла ошибка. Попробуйте отправить снова или перезагрузите страницу.</p>
     </div>

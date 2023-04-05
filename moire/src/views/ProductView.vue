@@ -13,6 +13,8 @@ import { useCartStore } from '../stores/counter';
 import SKU from '../helpers/sku-generator';
 import ServerApi from '../helpers/server-api';
 
+const route = useRoute();
+
 const store = useCartStore();
 const loading = ref(true);
 const product = ref({});
@@ -25,7 +27,7 @@ const sku = computed(() => {
   } else return '';
 });
 const breadcrumbs = ref([]);
-const route = useRoute();
+
 const emit = defineEmits(['loadingStart', 'loadingComplete']);
 const colors = computed(function () {
   return product.value.colors || [];
@@ -50,6 +52,8 @@ async function load() {
   selectedSize.value = product.value.sizes[0].id;
   selectedColor.value = product.value.colors[0].id;
   console.log('color', selectedColor.value);
+  route.meta.title = product.value.title;
+  document.title = route.meta.title;
   loading.value = false;
   emit('loadingComplete');
 }

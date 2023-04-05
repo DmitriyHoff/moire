@@ -20,12 +20,14 @@ const breadcrumbs = ref([
   <main class="content container">
     <div class="content__top">
       <BreadcrumbTrail :links="breadcrumbs" />
-      <CheckoutForm />
+
       <div class="content__row">
         <h1 class="content__title">Оформление заказа</h1>
       </div>
     </div>
 
-    <section class="cart"></section>
+    <section class="cart">
+      <CheckoutForm />
+    </section>
   </main>
 </template>
