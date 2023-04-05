@@ -4,7 +4,6 @@ import { computed } from 'vue';
 const props = defineProps(['sizeList', 'modelValue']);
 const emit = defineEmits(['update:modelValue']);
 
-console.log(props.sizeList);
 const selectedValue = computed({
   get() {
     return props.modelValue;

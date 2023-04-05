@@ -25,11 +25,13 @@ export default class ServerApi {
    * @returns {object}
    */
   static async post(apiPath, body) {
-    const response = await axios.post(BASE_API_URL + apiPath, body);
-    if (response.status === 200) return response.data;
-    else {
-      console.log(response.data);
-      return null;
+    let response;
+    try {
+      response = await axios.post(BASE_API_URL + apiPath, body);
+      if (response?.status === 200) return response.data;
+    } catch (error) {
+      console.log('jj');
+      if (error?.response?.status === 400) return error.response.data;
     }
   }
 
@@ -55,9 +57,6 @@ export default class ServerApi {
    * @returns {object}
    */
   static async delete(apiPath, body) {
-    /**
-     * метод axios.delete() не работает с payload
-     */
     const response = await axios.delete(BASE_API_URL + apiPath, { data: body });
     //const response = axios.request({ url: BASE_API_URL + apiPath, data: body, method: 'delete' });
     if (response.status === 200) return response.data;
@@ -137,7 +136,7 @@ export default class ServerApi {
    * @param {Order} order Информация о заказе
    */
   static async makeOrder(accessKey, order) {
-    return await axios.post('/orders', order);
+    return await ServerApi.post(`/orders?userAccessKey=${accessKey}`, order);
   }
 
   /** Получить информацию о заказе

@@ -23,7 +23,7 @@ const selectedColor = ref();
 const amount = ref(1);
 const sku = computed(() => {
   if (product.value && selectedColor.value && selectedSize.value) {
-    return new SKU({ id: product.value.id, color: selectedColor.value, size: selectedSize.value });
+    return SKU.get({ id: product.value.id, color: selectedColor.value, size: selectedSize.value });
   } else return '';
 });
 const breadcrumbs = ref([]);
@@ -42,7 +42,11 @@ async function load() {
     { title: 'Каталог', route: { name: 'main' } },
     {
       title: product.value.category.title,
-      route: { name: 'products', query: { categoryId: product.value.category.id } },
+      route: {
+        name: 'products',
+        query: { categoryId: product.value.category.id },
+        meta: { title: product.value.category.title },
+      },
     },
     {
       title: product.value.title,
@@ -58,8 +62,6 @@ async function load() {
   emit('loadingComplete');
 }
 function addProduct() {
-  console.log('add_amount', amount.value);
-  console.log('accessKey:', store.user?.accessKey);
   ServerApi.addProductToBasket(
     {
       productId: product.value.id,
@@ -70,21 +72,18 @@ function addProduct() {
     store.getUser()?.accessKey
   ).then((result) => {
     Object.assign(store.cart, result);
-    console.log('store.cart.user:', store.cart.user);
     store.setUser(store.cart.user);
-    console.log('store.user:', store.getUser());
-    //    console.log('add_amount', amount.value);
-    console.log('accessKey:', store.getUser()?.accessKey);
   });
 }
 
+/** Вовращает идентийикатор цвета */
 function getSubColorId(colorId) {
   return colors.value.find((element) => element.id === colorId).color.id;
 }
 </script>
 <template>
   <main class="content container">
-    <div class="content__top">
+    <div v-if="!loading" class="content__top">
       <BreadcrumbTrail :links="breadcrumbs" />
     </div>
     <PageLoader v-if="loading" />

@@ -8,7 +8,7 @@ defineProps(['product']);
   <li class="catalog__item">
     <RouterLink
       class="catalog__pic"
-      :to="{ name: 'product', params: { id: product.id }, state: { title: product.title } }"
+      :to="{ name: 'product', params: { id: product.id }, meta: { title: product.title } }"
     >
       <img
         :src="product.colors[0].gallery ? product.colors[0].gallery[0].file.url : noimgUrl"

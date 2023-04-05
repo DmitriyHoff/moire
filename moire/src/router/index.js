@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import { h } from 'vue';
 // const baseUrl = location.pathname;
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   //mode: 'history',
   routes: [
     {
@@ -36,7 +37,7 @@ const router = createRouter({
     {
       path: '/product/:id',
       name: 'product',
-      meta: { title: 'Каталог' },
+      meta: (route) => route.meta?.title || 'Каталог',
       component: () => import('../views/ProductView.vue'),
     },
     {
@@ -61,7 +62,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || 'Moire';
+  document.title = to.meta.title || 'Каталог';
   next();
 });
 export default router;

@@ -19,15 +19,11 @@ const orderInfo = reactive({
   paymentTypeId: 0,
   comment: '',
 });
+
 function submit() {
-  ServerApi.makeOrder(store.user.accessKey, {
-    name: 'string',
-    address: 'string',
-    phone: 'string',
-    email: 'string',
-    deliveryTypeId: 0,
-    paymentTypeId: 0,
-    comment: 'string',
+  const user = store.getUser();
+  ServerApi.makeOrder(user?.accessKey, orderInfo).then((response) => {
+    console.log(response);
   });
 }
 </script>
