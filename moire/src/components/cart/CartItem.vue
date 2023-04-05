@@ -4,6 +4,7 @@ import SKU from '../../helpers/sku-generator';
 import ServerApi from '../../helpers/server-api';
 import getColorTranslate from '../../helpers/color-dictionary';
 import { useCartStore } from '../../stores/counter';
+import noimageUrl from '../../assets/no-image.svg';
 
 const TIMEOUT = 300;
 const store = useCartStore();
@@ -61,11 +62,19 @@ function sendNewValue(isLast = false) {
     }
   }, TIMEOUT);
 }
+
+function setImageSrc(gallery) {
+  if (!gallery) {
+    return noimageUrl;
+  } else {
+    return gallery[0]?.file.url;
+  }
+}
 </script>
 <template>
   <li class="cart__item product">
     <RouterLink class="product__pic" :to="{ name: 'product', params: { id: item.product.id } }">
-      <img :src="item.color.gallery[0].file.url" width="120" height="120" :alt="item.title" />
+      <img :src="setImageSrc(item.color.gallery)" width="120" height="120" :alt="item.title" />
     </RouterLink>
 
     <div class="product__content">
