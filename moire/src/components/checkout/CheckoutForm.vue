@@ -37,23 +37,44 @@ function submit() {
             type="text"
             name="name"
             placeholder="Введите ваше полное имя"
+            v-model="orderInfo.name"
           />
           <span class="form__value">ФИО</span>
         </label>
 
         <label class="form__label">
-          <input class="form__input" type="text" name="address" placeholder="Введите ваш адрес" />
+          <input
+            class="form__input"
+            type="text"
+            name="address"
+            placeholder="Введите ваш адрес"
+            v-model="orderInfo.address"
+          />
           <span class="form__value">Адрес доставки</span>
         </label>
 
         <label class="form__label">
-          <input class="form__input" type="tel" name="phone" placeholder="Введите ваш телефон" />
+          <input
+            v-maska
+            data-maska="+7(###) ###-##-##"
+            class="form__input"
+            type="tel"
+            name="phone"
+            placeholder="Введите ваш телефон"
+            v-model="orderInfo.phone"
+          />
           <span class="form__value">Телефон</span>
           <span class="form__error">Неверный формат телефона</span>
         </label>
 
         <label class="form__label">
-          <input class="form__input" type="email" name="email" placeholder="Введи ваш Email" />
+          <input
+            class="form__input"
+            type="email"
+            name="email"
+            placeholder="Введи ваш Email"
+            v-model="orderInfo.email"
+          />
           <span class="form__value">Email</span>
         </label>
 
@@ -62,6 +83,7 @@ function submit() {
             class="form__input form__input--area"
             name="comments"
             placeholder="Ваши пожелания"
+            v-model="orderInfo.comment"
           ></textarea>
           <span class="form__value">Комментарий к заказу</span>
         </label>

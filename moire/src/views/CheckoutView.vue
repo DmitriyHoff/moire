@@ -6,14 +6,8 @@ import CheckoutForm from '../components/checkout/CheckoutForm.vue';
 // Формируем цепочку ссылок
 const breadcrumbs = ref([
   { title: 'Каталог', route: { name: 'main' } },
-  {
-    title: 'Корзина',
-    route: { name: 'cart' },
-  },
-  {
-    title: 'Оформление заказа',
-    route: { name: '#' },
-  },
+  { title: 'Корзина', route: { name: 'cart' } },
+  { title: 'Оформление заказа', route: { name: '#' } },
 ]);
 </script>
 <template>

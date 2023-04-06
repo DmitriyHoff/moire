@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import { h } from 'vue';
 // const baseUrl = location.pathname;
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  //mode: 'history',
+  mode: 'history',
   routes: [
     {
       path: '/:pathMatch(.*)*',
