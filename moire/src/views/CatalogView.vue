@@ -5,11 +5,12 @@ import PageLoader from '../components/PageLoader.vue';
 import ProductList from '../components/catalog/CatalogList.vue';
 import ProductsPagination from '../components/catalog/CatalogPagination.vue';
 import ServerApi from '../helpers/server-api';
-import { ref, computed, reactive, watch } from 'vue';
+import { ref, reactive, watch } from 'vue';
 
 const loading = ref(true); // индикатор загрузки
 const products = ref({}); // список продуктов
 const limit = ref(12); // лимит по умолчанию
+
 const pagination = reactive({
   page: 1,
   pages: 1,
@@ -35,7 +36,6 @@ function loadProducts() {
   //запрос продуктов и пагинации
   ServerApi.getProducts({ page: pagination.page, limit: limit.value }, route.query).then(
     (response) => {
-      console.log(response);
       loading.value = true;
       products.value = response.items;
 
@@ -45,25 +45,6 @@ function loadProducts() {
     }
   );
 }
-
-// Строка с количеством товаров
-const productsCountString = computed(() => {
-  const count = pagination.total % 100;
-  let s = '';
-
-  if (count >= 10 && count <= 20) {
-    s = 'товаров';
-  } else if (count % 10 === 1) {
-    s = 'товар';
-  } else if (count % 10 > 1 && count % 10 < 5) {
-    s = 'товара';
-  } else {
-    s = 'товаров';
-  }
-
-  const result = `${count} ${s}`;
-  return result;
-});
 </script>
 <template>
   <PageLoader v-if="loading" />
@@ -71,7 +52,7 @@ const productsCountString = computed(() => {
     <div class="content__top">
       <div class="content__row">
         <h1 class="content__title">Каталог</h1>
-        <span class="content__info"> {{ productsCountString }}</span>
+        <span class="content__info"> {{ $format.countItemsText(pagination.total) }}</span>
       </div>
     </div>
 
