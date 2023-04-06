@@ -112,6 +112,6 @@ function setImageSrc(gallery) {
       </div>
     </div>
 
-    <div class="product__price">{{ product.price * amount }}₽</div>
+    <div class="product__price">{{ $format.currRUB(product.price * amount) }}</div>
   </li>
 </template>

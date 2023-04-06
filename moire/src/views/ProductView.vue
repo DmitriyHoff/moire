@@ -55,7 +55,7 @@ async function load() {
   ];
   selectedSize.value = product.value.sizes[0].id;
   selectedColor.value = product.value.colors[0].id;
-  console.log('color', selectedColor.value);
+
   route.meta.title = product.value.title;
   document.title = route.meta.title;
   loading.value = false;
@@ -71,6 +71,7 @@ function addProduct() {
     },
     store.getUser()?.accessKey
   ).then((result) => {
+    console.log(result);
     Object.assign(store.cart, result);
     store.setUser(store.cart.user);
   });
@@ -97,7 +98,7 @@ function getSubColorId(colorId) {
             <div class="item__row item__row--center">
               <ProductCounter v-model="amount" />
 
-              <b class="item__price"> {{ product.price }} ₽ </b>
+              <b class="item__price"> {{ $format.currRUB(product.price * amount) }} </b>
             </div>
 
             <div class="item__row">

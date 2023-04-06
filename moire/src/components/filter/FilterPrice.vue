@@ -9,7 +9,7 @@ defineEmits(['update:priceFrom', 'update:priceTo']);
     <legend class="form__legend">Цена</legend>
     <label class="form__label form__label--price">
       <input
-        v-money="{ precision: 0, thousands: ' ' }"
+        v-money="{ precision: 0, thousands: '' }"
         data-maska="000 000 00#"
         data-maska-tokens="0:[0-9]:optional"
         reversed
@@ -24,7 +24,7 @@ defineEmits(['update:priceFrom', 'update:priceTo']);
     </label>
     <label class="form__label form__label--price">
       <input
-        v-money="{ precision: 0, thousands: ' ' }"
+        v-money="{ precision: 0, thousands: '' }"
         class="form__input"
         type="text"
         name="max-price"

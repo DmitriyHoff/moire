@@ -26,6 +26,14 @@ function submit() {
     console.log(response);
   });
 }
+
+// Опции для маски поля ФИО
+const nameMaskOptions = reactive({
+  tokens: {
+    A: { pattern: /[A-ZА-ЯЁ]/, transform: (v) => v.toLocaleUpperCase() },
+    z: { pattern: /[a-zа-яё]/, transform: (v) => v.toLocaleLowerCase(), multiple: true },
+  },
+});
 </script>
 <template>
   <form class="cart__form form" action="#" method="POST">
@@ -33,6 +41,8 @@ function submit() {
       <div class="cart__data">
         <label class="form__label">
           <input
+            v-maska:[nameMaskOptions]
+            data-maska="Az Az Az"
             class="form__input"
             type="text"
             name="name"
@@ -57,6 +67,7 @@ function submit() {
           <input
             v-maska
             data-maska="+7(###) ###-##-##"
+            data-maska-eager
             class="form__input"
             type="tel"
             name="phone"
@@ -90,8 +101,11 @@ function submit() {
       </div>
 
       <div class="cart__options">
-        <CheckoutDelivery />
-        <CheckoutPayment />
+        <CheckoutDelivery v-model="orderInfo.deliveryTypeId" />
+        <CheckoutPayment
+          v-model="orderInfo.paymentTypeId"
+          :deliveryTypeId="orderInfo.deliveryTypeId"
+        />
       </div>
     </div>
 
@@ -101,7 +115,7 @@ function submit() {
           <h3>
             {{ `${item.product.title} (${item.size.title}) |${item.quantity} шт.` }}
           </h3>
-          <b>{{ item.price * item.quantity }} ₽</b>
+          <b>{{ $format.currRUB(item.price * item.quantity) }}</b>
           <span
             >Артикул:
             {{
@@ -118,7 +132,8 @@ function submit() {
       <div class="cart__total">
         <p>Доставка: <b>бесплатно</b></p>
         <p>
-          Итого: <b>{{ store.count }}</b> товара на сумму <b>{{ store.totalPrice }} ₽</b>
+          Итого: <b>{{ store.count }}</b> {{ $format.countText(store.count) }} на сумму
+          <b>{{ $format.currRUB(store.totalPrice) }}</b>
         </p>
       </div>
 

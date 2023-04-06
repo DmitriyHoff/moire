@@ -56,7 +56,7 @@ function updateCart(newCart) {
         <div class="cart__block">
           <p class="cart__desc">Мы&nbsp;посчитаем стоимость доставки на&nbsp;следующем этапе</p>
           <p class="cart__price">
-            Итого: <span>{{ totalPrice }} ₽</span>
+            Итого: <span>{{ $format.currRUB(totalPrice) }}</span>
           </p>
 
           <button

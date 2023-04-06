@@ -1,3 +1,4 @@
+<script setup></script>
 <template>
   <main class="content container">
     <div class="content__top">

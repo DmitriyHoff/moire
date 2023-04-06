@@ -11,10 +11,8 @@ export default class ServerApi {
    */
   static async get(apiPath) {
     const response = await axios.get(BASE_API_URL + apiPath);
-    console.log(response);
     if (response.status === 200) return await response.data;
     else {
-      console.log(response.data);
       return null;
     }
   }
@@ -30,7 +28,6 @@ export default class ServerApi {
       response = await axios.post(BASE_API_URL + apiPath, body);
       if (response?.status === 200) return response.data;
     } catch (error) {
-      console.log('jj');
       if (error?.response?.status === 400) return error.response.data;
     }
   }
@@ -45,7 +42,6 @@ export default class ServerApi {
     const response = await axios.put(BASE_API_URL + apiPath, body);
     if (response.status === 200) return response.data;
     else {
-      console.log(response.data);
       return null;
     }
   }
@@ -104,7 +100,7 @@ export default class ServerApi {
    */
   static async getDeliveries() {
     const data = await ServerApi.get('/deliveries');
-    return data.items;
+    return data;
   }
   /** Получить список материалов
    *
@@ -160,7 +156,7 @@ export default class ServerApi {
    */
   static async getPayments(deliveryTypeId) {
     const data = await ServerApi.get(`/payments?deliveryTypeId=${deliveryTypeId}`);
-    return data.items;
+    return data;
   }
 
   /** Получить список категорий

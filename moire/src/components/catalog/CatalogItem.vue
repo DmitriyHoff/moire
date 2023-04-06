@@ -24,7 +24,7 @@ defineProps(['product']);
         </RouterLink>
       </h3>
 
-      <span class="catalog__price"> {{ product.price }} ₽ </span>
+      <span class="catalog__price"> {{ $format.currRUB(product.price) }} </span>
       <ProductColors :colors="product.colors" />
     </div>
   </li>
