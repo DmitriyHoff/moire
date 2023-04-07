@@ -142,7 +142,7 @@ export default class ServerApi {
    */
   static async getOrderInfo(orderId, accessKey) {
     const data = await ServerApi.get(`/orders/${orderId}?userAccessKey=${accessKey}`);
-    return data.items;
+    return data;
   }
 
   /** Получить список способов оплаты по идентифиатору типа доставки

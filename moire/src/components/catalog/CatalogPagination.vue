@@ -35,11 +35,15 @@ function pagination(arg) {
         aria-label="Предыдущая страница"
         @click.prevent="pagination('prev')"
       >
-        <svg v-svg symbol="icon-arrow-left" size="0 0 8 14"></svg>
+        <svg v-svg symbol="icon-arrow-left" size="8 14"></svg>
       </a>
     </li>
     <li class="pagination__item" v-for="pageNumber in count" :key="pageNumber">
-      <a class="pagination__link" :class="{ 'pagination__link--current': pageNumber === page }">
+      <a
+        class="pagination__link"
+        :class="{ 'pagination__link--current': pageNumber === page }"
+        @click.prevent="pagination(pageNumber)"
+      >
         {{ pageNumber }}
       </a>
     </li>

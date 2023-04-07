@@ -21,6 +21,11 @@ function setImageSrc(gallery) {
     return gallery[0]?.file.url;
   }
 }
+
+const imageLoaded = ref(false);
+function onImageLoaded() {
+  imageLoaded.value = true;
+}
 </script>
 <template>
   <div class="item__pics pics">
@@ -34,7 +39,22 @@ function setImageSrc(gallery) {
         alt="Название товара"
         ref="img"
         :hidden="selectedIndex !== index"
+        @load="onImageLoaded"
       />
+      <div v-show="!imageLoaded" class="lds-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
     <ul class="pics__list">
       <li v-for="(color, index) in colors" :key="color.id" class="pics__item">

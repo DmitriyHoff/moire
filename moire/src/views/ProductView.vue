@@ -21,6 +21,7 @@ const product = ref({});
 const selectedSize = ref();
 const selectedColor = ref();
 const amount = ref(1);
+const addWaiting = ref(false);
 const sku = computed(() => {
   if (product.value && selectedColor.value && selectedSize.value) {
     return SKU.get({ id: product.value.id, color: selectedColor.value, size: selectedSize.value });
@@ -62,6 +63,7 @@ async function load() {
   emit('loadingComplete');
 }
 function addProduct() {
+  addWaiting.value = true;
   ServerApi.addProductToBasket(
     {
       productId: product.value.id,
@@ -74,6 +76,7 @@ function addProduct() {
     console.log(result);
     Object.assign(store.cart, result);
     store.setUser(store.cart.user);
+    addWaiting.value = false;
   });
 }
 
@@ -117,10 +120,11 @@ function getSubColorId(colorId) {
 
             <button
               class="item__button button button--primery"
+              :class="addWaiting ? 'button--loading' : ''"
               type="submit"
               @click.prevent="addProduct"
             >
-              В корзину
+              <span class="button__text">В корзину</span>
             </button>
           </form>
         </div>

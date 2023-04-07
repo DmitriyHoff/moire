@@ -53,7 +53,7 @@ const router = createRouter({
       component: () => import('../views/CheckoutView.vue'),
     },
     {
-      path: '/order',
+      path: '/order/:id',
       name: 'order',
       meta: { title: 'Статус заказа' },
       component: () => import('../views/OrderView.vue'),

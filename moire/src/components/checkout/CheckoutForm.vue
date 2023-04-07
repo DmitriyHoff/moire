@@ -1,15 +1,18 @@
 <script setup>
 import CheckoutDelivery from './CheckoutDelivery.vue';
 import CheckoutPayment from './CheckoutPayment.vue';
-import SKU from '../../helpers/sku-generator';
+import getColorTranslate from '../../helpers/color-dictionary';
 
 import { useCartStore } from '../../stores/counter';
 import { ref, reactive } from 'vue';
 import ServerApi from '../../helpers/server-api';
+import { useRouter } from 'vue-router';
 
 const store = useCartStore();
+const router = useRouter();
 const hasError = ref(false);
-
+const submitWaiting = ref(false);
+const error = reactive({});
 const orderInfo = reactive({
   name: '',
   address: '',
@@ -21,9 +24,14 @@ const orderInfo = reactive({
 });
 
 function submit() {
+  submitWaiting.value = true;
   const user = store.getUser();
   ServerApi.makeOrder(user?.accessKey, orderInfo).then((response) => {
     console.log(response);
+    if (response.error) {
+      Object.assign(error, response.error);
+    } else router.push({ name: 'order', params: { id: response.id } });
+    submitWaiting.value = false;
   });
 }
 
@@ -50,6 +58,7 @@ const nameMaskOptions = reactive({
             v-model="orderInfo.name"
           />
           <span class="form__value">ФИО</span>
+          <span v-if="error.request?.name" class="form__error">{{ error.request.name }}</span>
         </label>
 
         <label class="form__label">
@@ -61,6 +70,7 @@ const nameMaskOptions = reactive({
             v-model="orderInfo.address"
           />
           <span class="form__value">Адрес доставки</span>
+          <span v-if="error.request?.address" class="form__error">{{ error.request.address }}</span>
         </label>
 
         <label class="form__label">
@@ -71,11 +81,11 @@ const nameMaskOptions = reactive({
             class="form__input"
             type="tel"
             name="phone"
-            placeholder="Введите ваш телефон"
+            placeholder="+7(XXX) XXX-XX-XX"
             v-model="orderInfo.phone"
           />
           <span class="form__value">Телефон</span>
-          <span class="form__error">Неверный формат телефона</span>
+          <span v-if="error.request?.phone" class="form__error">{{ error.request.phone }}</span>
         </label>
 
         <label class="form__label">
@@ -87,6 +97,7 @@ const nameMaskOptions = reactive({
             v-model="orderInfo.email"
           />
           <span class="form__value">Email</span>
+          <span v-if="error.request?.email" class="form__error">{{ error.request.email }}</span>
         </label>
 
         <label class="form__label">
@@ -100,45 +111,47 @@ const nameMaskOptions = reactive({
         </label>
       </div>
 
-      <div class="cart__options">
-        <CheckoutDelivery v-model="orderInfo.deliveryTypeId" />
+      <ul class="cart__options">
+        <CheckoutDelivery v-model="orderInfo.deliveryTypeId" :error="error" />
         <CheckoutPayment
           v-model="orderInfo.paymentTypeId"
           :deliveryTypeId="orderInfo.deliveryTypeId"
+          :error="error"
         />
-      </div>
+      </ul>
     </div>
 
     <div class="cart__block">
       <ul class="cart__orders">
         <li v-for="item in store.cart.items" class="cart__order" :key="item.id">
-          <h3>
-            {{ `${item.product.title} (${item.size.title}) |${item.quantity} шт.` }}
-          </h3>
+          <h3>{{ item.product.title }}</h3>
           <b>{{ $format.currRUB(item.price * item.quantity) }}</b>
-          <span
-            >Артикул:
-            {{
-              SKU.get({
-                id: item.product.id,
-                color: item.color.color.id,
-                size: item.size.id,
-              })
-            }}</span
-          >
+          <p class="cart__sku">
+            <span>Цвет: {{ getColorTranslate(item.product.colors[0].color.title) }}</span>
+            <span>Размер: {{ item.size.title }}</span>
+          </p>
+          <span class="cart__total-count">
+            {{ item.quantity }} шт. &#x00d7; {{ $format.currRUB(item.price) }}
+          </span>
         </li>
       </ul>
 
       <div class="cart__total">
-        <p>Доставка: <b>бесплатно</b></p>
+        <p>Доставка:</p>
+        <p class="cart__order-price">бесплатно</p>
         <p>
-          Итого: <b>{{ store.count }}</b> {{ $format.countText(store.count) }} на сумму
-          <b>{{ $format.currRUB(store.totalPrice) }}</b>
+          Итого: <b>{{ store.count }}</b> {{ $format.countText(store.count) }} на сумму:
         </p>
+        <p class="cart__order-price">{{ $format.currRUB(store.totalPrice) }}</p>
       </div>
 
-      <button class="cart__button button button--primery" type="submit" @click.prevent="submit">
-        Оформить заказ
+      <button
+        class="cart__button button button--primery"
+        :class="submitWaiting ? 'button--loading' : ''"
+        type="submit"
+        @click.prevent="submit"
+      >
+        <span class="button__text">Оформить заказ</span>
       </button>
     </div>
     <div v-if="hasError" class="cart__error form__error-block">
