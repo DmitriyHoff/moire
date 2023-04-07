@@ -13,7 +13,7 @@ const colors = {
  * @param {string} key Цвет в словаре
  * @returns Перевод
  */
-export default function getColorTranslate(colorName) {
+export default function translateColorName(colorName) {
   const key = Object.keys(colors).find((key) => {
     return key.toUpperCase().trim() === colorName.toUpperCase().trim();
   });

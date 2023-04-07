@@ -10,7 +10,7 @@ import PageLoader from '../components/PageLoader.vue';
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCartStore } from '../stores/counter';
-import SKU from '../helpers/sku-generator';
+import toSkuString from '../helpers/sku-generator';
 import ServerApi from '../helpers/server-api';
 
 const route = useRoute();
@@ -24,7 +24,11 @@ const amount = ref(1);
 const addWaiting = ref(false);
 const sku = computed(() => {
   if (product.value && selectedColor.value && selectedSize.value) {
-    return SKU.get({ id: product.value.id, color: selectedColor.value, size: selectedSize.value });
+    return toSkuString({
+      id: product.value.id,
+      color: selectedColor.value,
+      size: selectedSize.value,
+    });
   } else return '';
 });
 const breadcrumbs = ref([]);

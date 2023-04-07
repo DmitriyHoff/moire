@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import SKU from '../../helpers/sku-generator';
+import toSkuString from '../../helpers/sku-generator';
 import ServerApi from '../../helpers/server-api';
-import getColorTranslate from '../../helpers/color-dictionary';
+import translateColorName from '../../helpers/color-dictionary';
 import { useCartStore } from '../../stores/counter';
 import noimageUrl from '../../assets/no-image.svg';
 
@@ -14,11 +14,11 @@ const emit = defineEmits(['update:cart', 'confirm:delete']);
 const product = ref(props.item.product);
 const amount = ref(props.item.quantity);
 const sku = ref(
-  new SKU({
+  toSkuString({
     id: product.value.id,
     color: props.item.color.color.id,
     size: props.item.size.id,
-  }).toString()
+  })
 );
 
 let timerId;
@@ -84,7 +84,7 @@ function setImageSrc(gallery) {
           Цвет:
           <span>
             <i :style="`background-color: ${item.color.color.code}`"></i>
-            {{ getColorTranslate(item.color.color.title) }}
+            {{ translateColorName(item.color.color.title) }}
           </span>
         </p>
         <p class="product__size">

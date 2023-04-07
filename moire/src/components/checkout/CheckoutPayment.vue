@@ -9,7 +9,6 @@ const items = ref({});
 watch(
   () => props.deliveryTypeId,
   () => {
-    console.log(props.deliveryTypeId);
     ServerApi.getPayments(props.deliveryTypeId).then((response) => {
       console.log('pay', response);
       items.value = response;
