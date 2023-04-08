@@ -13,7 +13,7 @@ const router = useRouter();
 const hasError = ref(false);
 const submitWaiting = ref(false);
 const error = reactive({});
-const deliveryType = reactive({});
+const deliveryType = ref({});
 const orderInfo = reactive({
   name: '',
   address: '',
