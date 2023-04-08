@@ -222,6 +222,35 @@ a {
   }
 }
 
+.button--ok {
+  background-color: #2de078;
+  position: relative;
+}
+
+.button--ok:not(:disabled):hover {
+  background-color: #166b39
+}
+
+.button--ok::after {
+  content: 'Перейти в корзину';
+  display: block;
+  position: fixed;
+  padding: 12px;
+  width: max-content;
+  top: -12px;
+  left: 50%;
+  font-size: 12px;
+  opacity: 0;
+  background-color: #89898999;
+  transform: translate(-50%, -100%);
+  transition: all .3s ease;
+  pointer-events: none;
+}
+
+.button--ok:hover.button--ok::after {
+  opacity: 1;
+}
+
 .header {
   background-color: #fff
 }
@@ -998,7 +1027,8 @@ a {
 }
 
 .cart__sku {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
   width: 100%;
   margin: 0;
@@ -1350,32 +1380,56 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
+  transition: all .3s ease-in-out;
+  border-radius: 8px;
 }
+
+.catalog__button {
+  padding: 10px 18px;
+  transition: all .3s ease-in-out;
+}
+
+.catalog__item:hover {
+  box-shadow: 1px 1px 3px 0px #150c2633;
+  transform: scale(1.05);
+}
+
+
 
 .catalog__item-content {
   display: flex;
   flex-direction: column;
+  padding: 0 12px;
   gap: 8px;
+}
+
+.catalog__pics-wrapper {
+  height: 100%;
 }
 
 .catalog__pic {
   position: relative;
   display: block;
+  height: 270px;
   margin-bottom: 20px;
   flex-grow: 2;
+  overflow: hidden;
 }
 
 .catalog__pic img {
+  position: relative;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: -1;
 }
 
 .catalog__title {
   margin: 0 0 10px;
-  height: 3em;
-  font-weight: 400;
-  font-size: 16px;
+  height: 2em;
+  font-weight: 500;
+  font-size: 15px;
   line-height: 22px;
   color: #222
 }
@@ -1402,6 +1456,42 @@ a {
 
 .catalog__pagination {
   margin-top: auto
+}
+
+.catalog__size-box {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all .3s ease-in-out;
+}
+
+.catalog__size-box .form__select {
+  background-color: white;
+  outline: none;
+  outline-offset: -1px;
+}
+
+.catalog__size-box .form__select:focus-visible {
+  outline: 1px solid #e02d71;
+}
+
+.catalog__size-box .form__label {
+  margin: 0;
+}
+
+.catalog__size-box .form__label select {
+  height: 100%;
+}
+
+.catalog__item:hover .catalog__size-box {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .item {

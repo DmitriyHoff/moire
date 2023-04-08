@@ -1,7 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import ProductFilter from '../components/filter/FilterForm.vue';
-import PageLoader from '../components/PageLoader.vue';
 import ProductList from '../components/catalog/CatalogList.vue';
 import ProductsPagination from '../components/catalog/CatalogPagination.vue';
 import ServerApi from '../helpers/server-api';
@@ -47,7 +46,6 @@ function loadProducts() {
 }
 </script>
 <template>
-  <PageLoader v-if="loading" />
   <main v-if="!loading" class="content container">
     <div class="content__top">
       <div class="content__row">

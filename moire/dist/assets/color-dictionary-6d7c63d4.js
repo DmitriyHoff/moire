@@ -1,1 +1,0 @@
-const r={Red:"Красный",Blue:"Синий",Green:"Зелёный",Yellow:"Жёлтый",Purple:"Фиолетовый",Pink:"Розовый",black:"Чёрный",white:"Белый"};function o(e){const t=Object.keys(r).find(n=>n.toUpperCase().trim()===e.toUpperCase().trim());return t?r[t]:e}export{o as g};

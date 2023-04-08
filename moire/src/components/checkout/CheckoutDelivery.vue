@@ -1,22 +1,36 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, watch } from 'vue';
 import ServerApi from '../../helpers/server-api';
-const props = defineProps(['modelValue', 'error']);
-const emit = defineEmits(['update:modelValue']);
-const loading = ref(false);
-loading.value = true;
+defineProps(['error']);
+const emit = defineEmits(['update:delivery']);
+const loading = ref(true);
+
+// все варианты доставки
 const deliveries = ref({});
 
-const checkedValues = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit('update:modelValue', value);
-  },
-});
+// Id выбранного способа доставки
+const selectedValue = ref(0);
+
+watch(
+  // Если изменился Id
+  () => selectedValue.value,
+  (val) =>
+    // Отправим событие с новым объектом типа доставки
+    emit(
+      'update:delivery',
+      deliveries.value.find((x) => x.id === val)
+    )
+);
+
+// выполняем запрос к API
 ServerApi.getDeliveries().then((response) => {
   deliveries.value = response;
+
+  // Если есть элементы в массиве
+  if (deliveries.value instanceof Array && deliveries.value.length > 0)
+    // выбираем Id первого элемента
+    selectedValue.value = deliveries.value[0].id;
+
   loading.value = false;
 });
 </script>
@@ -34,7 +48,7 @@ ServerApi.getDeliveries().then((response) => {
             type="radio"
             name="delivery"
             :value="delivery.id"
-            v-model="checkedValues"
+            v-model="selectedValue"
           />
           <span class="options__value">
             {{ delivery.title }}

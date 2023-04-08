@@ -13,6 +13,7 @@ const router = useRouter();
 const hasError = ref(false);
 const submitWaiting = ref(false);
 const error = reactive({});
+const deliveryType = reactive({});
 const orderInfo = reactive({
   name: '',
   address: '',
@@ -23,13 +24,15 @@ const orderInfo = reactive({
   comment: '',
 });
 
+/* Отправляет данные формы */
 function submit() {
+  hasError.value = false;
   submitWaiting.value = true;
   const user = store.getUser();
   ServerApi.makeOrder(user?.accessKey, orderInfo).then((response) => {
-    console.log(response);
     if (response.error) {
       Object.assign(error, response.error);
+      hasError.value = true;
     } else router.push({ name: 'order', params: { id: response.id } });
     submitWaiting.value = false;
   });
@@ -112,7 +115,15 @@ const nameMaskOptions = reactive({
       </div>
 
       <ul class="cart__options">
-        <CheckoutDelivery v-model="orderInfo.deliveryTypeId" :error="error" />
+        <CheckoutDelivery
+          :error="error"
+          @update:delivery="
+            ($event) => {
+              deliveryType = $event;
+              orderInfo.deliveryTypeId = deliveryType.id;
+            }
+          "
+        />
         <CheckoutPayment
           v-model="orderInfo.paymentTypeId"
           :deliveryTypeId="orderInfo.deliveryTypeId"
@@ -137,12 +148,20 @@ const nameMaskOptions = reactive({
       </ul>
 
       <div class="cart__total">
-        <p>Доставка:</p>
-        <p class="cart__order-price">бесплатно</p>
+        <p>{{ deliveryType?.title }}:</p>
+        <p class="cart__order-price">
+          {{
+            deliveryType?.price && deliveryType?.price > 0
+              ? $format.currRUB(deliveryType.price)
+              : 'бесплатно'
+          }}
+        </p>
         <p>
           Итого: <b>{{ store.count }}</b> {{ $format.countText(store.count) }} на сумму:
         </p>
-        <p class="cart__order-price">{{ $format.currRUB(store.totalPrice) }}</p>
+        <p class="cart__order-price">
+          {{ $format.currRUB(+store.totalPrice + +deliveryType?.price) }}
+        </p>
       </div>
 
       <button

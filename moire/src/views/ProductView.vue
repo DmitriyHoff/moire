@@ -13,6 +13,7 @@ import { useCartStore } from '../stores/counter';
 import toSkuString from '../helpers/sku-generator';
 import ServerApi from '../helpers/server-api';
 
+const props = defineProps(['title']);
 const route = useRoute();
 
 const store = useCartStore();
@@ -40,6 +41,7 @@ const colors = computed(function () {
 load();
 
 async function load() {
+  console.log(props.title);
   loading.value = true;
   emit('loadingStart');
   product.value = await ServerApi.getProductById(route.params.id);
@@ -50,7 +52,7 @@ async function load() {
       route: {
         name: 'products',
         query: { categoryId: product.value.category.id },
-        meta: { title: product.value.category.title },
+        props: [{ title: product.value.category.title }],
       },
     },
     {
@@ -61,8 +63,8 @@ async function load() {
   selectedSize.value = product.value.sizes[0].id;
   selectedColor.value = product.value.colors[0].id;
 
-  route.meta.title = product.value.title;
-  document.title = route.meta.title;
+  // route.meta.title = product.value.title;
+  // document.title = route.meta.title;
   loading.value = false;
   emit('loadingComplete');
 }

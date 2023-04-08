@@ -9,8 +9,12 @@ const store = useCartStore();
 
 // индикатор загрузки
 const loading = ref(false);
+
+// получаем пользователя из локального хранилища
 const user = store.getUser();
 
+// если информация о пользователе уже есть
+// загружаем информацию о корзине
 if (user?.accessKey) {
   loading.value = true; // указываем, что страница загружается
   ServerApi.getBasket(user.accessKey).then((result) => {
@@ -19,15 +23,16 @@ if (user?.accessKey) {
     loading.value = false; // страница загружена
   });
 }
+
+// общая стоимость товаров в корзине
 const totalPrice = computed(() => {
   return store.cart.items.reduce((acc, item) => (acc += item.price * item.quantity), 0);
 });
+
+// ссылки для цепочки ссылок
 const breadcrumbs = ref([
   { title: 'Каталог', route: { name: 'main' } },
-  {
-    title: 'Корзина',
-    route: { path: '#' },
-  },
+  { title: 'Корзина', route: { path: '#' } },
 ]);
 
 /** Обновляет козину новыми значениями */

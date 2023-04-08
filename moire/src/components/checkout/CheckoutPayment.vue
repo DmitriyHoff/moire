@@ -5,17 +5,23 @@ import ServerApi from '../../helpers/server-api';
 const props = defineProps(['modelValue', 'deliveryTypeId', 'error']);
 const emit = defineEmits(['update:modelValue']);
 const items = ref({});
-// следим за изменением свойства
+
+// следим за изменением типа доставки
 watch(
   () => props.deliveryTypeId,
   () => {
     ServerApi.getPayments(props.deliveryTypeId).then((response) => {
-      console.log('pay', response);
       items.value = response;
+
+      // Если есть элементы в массиве
+      if (items.value instanceof Array && items.value.length > 0)
+        // выбираем первый
+        checkedValues.value = items.value[0].id;
     });
   }
 );
 
+// возвращает выбранные элементы
 const checkedValues = computed({
   get() {
     return props.modelValue;

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { h } from 'vue';
-// const baseUrl = location.pathname;
+import { useCartStore } from '../stores/counter';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -37,7 +37,7 @@ const router = createRouter({
     {
       path: '/product/:id',
       name: 'product',
-      meta: (route) => route.meta?.title || 'Каталог',
+      meta: { title: 'Каталог' },
       component: () => import('../views/ProductView.vue'),
     },
     {
@@ -57,6 +57,16 @@ const router = createRouter({
       name: 'order',
       meta: { title: 'Статус заказа' },
       component: () => import('../views/OrderView.vue'),
+      beforeEnter: (to, from, next) => {
+        // Если пользователь не авторизован
+        const store = useCartStore();
+        if (!store.getUser()?.accessKey) {
+          // выполним переадресацию на страницу каталога
+          next({ name: 'products', replace: true });
+        }
+        //
+        else next();
+      },
     },
   ],
 });
