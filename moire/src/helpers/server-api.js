@@ -57,7 +57,6 @@ export default class ServerApi {
     //const response = axios.request({ url: BASE_API_URL + apiPath, data: body, method: 'delete' });
     if (response.status === 200) return response.data;
     else {
-      console.log(response.data);
       return null;
     }
   }
@@ -71,8 +70,9 @@ export default class ServerApi {
    * @property {string} code
    * @returns {Color[]}
    */
-  static getColors() {
-    // /api/colors
+  static async getColors() {
+    const data = await ServerApi.get('/colors');
+    return data.items;
   }
 
   /** Получить список сезонов
@@ -224,7 +224,6 @@ export default class ServerApi {
   static async getProducts(params, routeQuery = null) {
     let url = '/products';
 
-    if (!params) console.log('has no params');
     let queryPrimary = '?';
     if (params) {
       const entries = Object.entries(params).map((x) => `${x[0]}=${x[1]}`);
@@ -293,8 +292,6 @@ export default class ServerApi {
    * @returns {string} userAccessKey
    */
   static async addProductToBasket(cartItem, userAccessKey = null) {
-    console.log(userAccessKey ? `?userAccessKey=${userAccessKey}` : '');
-    console.log(cartItem);
     return await ServerApi.post(
       '/baskets/products' + (userAccessKey ? `?userAccessKey=${userAccessKey}` : ''),
       cartItem

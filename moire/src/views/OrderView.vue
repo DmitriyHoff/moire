@@ -119,9 +119,8 @@ const route = useRoute();
 const loading = ref(true);
 const user = store.getUser();
 ServerApi.getOrderInfo(route.params.id, user.accessKey).then((response) => {
-  console.log(user);
   Object.assign(orderInfo, response);
-  console.log(response);
+
   loading.value = false;
 });
 

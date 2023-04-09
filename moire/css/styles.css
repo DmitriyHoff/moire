@@ -59,6 +59,7 @@
 :root {
   --color-primary: #e02d71;
   --grid-gap: 30px;
+  --border-color: #222;
 }
 
 html {
@@ -649,8 +650,8 @@ a {
   border: 1px solid transparent;
 }
 
-.colors__label:focus .colors__value::before,
-.colors__label:hover .colors__value::before,
+/* .colors__label:focus .colors__value::before, */
+/* .colors__label:hover .colors__value::before, */
 .colors__radio:checked~.colors__value::before {
   border-color: var(--border-color);
 }

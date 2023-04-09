@@ -3,6 +3,7 @@ import CategoryFilter from './FilterCategory.vue';
 import PriceFilter from './FilterPrice.vue';
 import MaterialFilter from './FilterMaterial.vue';
 import SeasonsFilter from './FilterSeasons.vue';
+import ColorsFilter from './FilterColors.vue';
 
 import { ref } from 'vue';
 import { computed } from 'vue';
@@ -23,13 +24,15 @@ const maxPrice = ref(0);
 const categoryId = ref(0);
 const materials = ref([]);
 const seasons = ref([]);
+const colors = ref([]);
 
 // Копируем параметры с адресной строки, если они есть
 minPrice.value = route.query?.minPrice || 0;
 maxPrice.value = route.query?.maxPrice || 0;
 categoryId.value = route.query?.categoryId || 0;
-materials.value = route.query['materialIds[]'] || [];
-seasons.value = route.query['seasonIds[]'] || [];
+materials.value = getArrayValue(route.query['materialIds[]']);
+seasons.value = getArrayValue(route.query['seasonIds[]']);
+colors.value = getArrayValue(route.query['colorIds[]']);
 
 // Строка запроса с фильтрами
 const queryString = computed(() => ({
@@ -38,6 +41,7 @@ const queryString = computed(() => ({
   ...(categoryId.value > 0 ? { categoryId: categoryId.value } : {}),
   ...(materials.value.length > 0 ? { 'materialIds[]': materials.value } : {}),
   ...(seasons.value.length > 0 ? { 'seasonIds[]': seasons.value } : {}),
+  ...(colors.value.length > 0 ? { 'colorIds[]': colors.value } : {}),
 }));
 
 // Сбросывает фильтры
@@ -47,10 +51,16 @@ function reset() {
   categoryId.value = 0;
   materials.value = [];
   seasons.value = [];
+  colors.value = [];
   hasChange.value = false;
 
   // Просто изменяем адрес, в сторию браузера ничего не добавится
   router.replace({ query: queryString.value });
+}
+function getArrayValue(val) {
+  if (Array.isArray(val)) return val;
+  else if (val) return [val];
+  else return [];
 }
 </script>
 
@@ -59,6 +69,7 @@ function reset() {
     <form class="filter__form form" action="#" method="get">
       <PriceFilter v-model:priceFrom="minPrice" v-model:priceTo="maxPrice" />
       <CategoryFilter v-model="categoryId" />
+      <ColorsFilter v-model="colors" />
       <MaterialFilter v-model="materials" />
       <SeasonsFilter v-model="seasons" />
       <button

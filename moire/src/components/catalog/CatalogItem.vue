@@ -20,7 +20,6 @@ const store = useCartStore();
 watch(
   () => selectedColor.value,
   () => {
-    console.log(props.product);
     selectedIndex.value = props.product.colors.findIndex((x) => x.id === selectedColor.value);
   }
 );
@@ -50,7 +49,6 @@ function addProduct() {
     },
     store.getUser()?.accessKey
   ).then((result) => {
-    console.log(result);
     setTimeout(() => {
       Object.assign(store.cart, result);
       store.setUser(store.cart.user);
@@ -63,7 +61,6 @@ function addProduct() {
 
 // загружает дополнительную информацию о продукте
 function loadProductInfo() {
-  console.log(infoLoaded.value);
   if (!infoLoaded.value && !infoLoadingLock.value) {
     infoLoadingLock.value = true;
     ServerApi.getProductById(props.product.id).then((response) => {
@@ -71,7 +68,6 @@ function loadProductInfo() {
       selectedSize.value = productSizes.value[0].id;
       infoLoaded.value = true;
       infoLoadingLock.value = false;
-      console.log('loadded product info');
     });
   }
 }

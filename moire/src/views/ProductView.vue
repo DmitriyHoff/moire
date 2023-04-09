@@ -41,7 +41,6 @@ const colors = computed(function () {
 load();
 
 async function load() {
-  console.log(props.title);
   loading.value = true;
   emit('loadingStart');
   product.value = await ServerApi.getProductById(route.params.id);
@@ -79,7 +78,6 @@ function addProduct() {
     },
     store.getUser()?.accessKey
   ).then((result) => {
-    console.log(result);
     Object.assign(store.cart, result);
     store.setUser(store.cart.user);
     addWaiting.value = false;
