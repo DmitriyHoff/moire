@@ -411,7 +411,7 @@ a {
 }
 
 .form__label:not(:last-child) {
-  /* margin-bottom: 25px; */
+  margin-bottom: 25px;
 }
 
 .form__label--price::after {
