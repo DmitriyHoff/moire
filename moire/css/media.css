@@ -9,6 +9,21 @@
     flex-wrap: wrap;
   }
 
+  .options__value {
+    height: 4em;
+  }
+
+  .options__value {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* padding: 10px 10px 10px 60px; */
+  }
+
+  .cart__data label {
+    grid-column: 1/-1;
+  }
+
   .cart__price span {
     font-size: 24px;
   }
@@ -134,6 +149,10 @@
     grid-template-columns: 1fr;
   }
 
+  .cart__error {
+    grid-column: 1;
+  }
+
   .product__content {
     display: grid;
     grid-template-columns: 1fr;
@@ -155,9 +174,6 @@
     line-height: 130%;
   }
 
-  .options__value {
-    height: 5em;
-  }
 
   .options__value {
     display: flex;
