@@ -99,19 +99,20 @@ function setImageSrc(gallery) {
         >
       </div>
       <div class="product__counter form__counter">
-        <button type="button" aria-label="Убрать один товар" @click="decreaseCount()">
-          <svg v-if="amount === 1" v-svg size="16 16" symbol="icon-delete"></svg>
-          <svg v-else v-svg size="12 12" symbol="icon-minus"></svg>
-        </button>
+        <div class="product__counter-wrap">
+          <button type="button" aria-label="Убрать один товар" @click="decreaseCount()">
+            <svg v-if="amount === 1" v-svg size="16 16" symbol="icon-delete"></svg>
+            <svg v-else v-svg size="12 12" symbol="icon-minus"></svg>
+          </button>
 
-        <input type="text" :value="amount" name="count" />
+          <input type="text" :value="amount" name="count" />
 
-        <button type="button" aria-label="Добавить один товар" @click="increaseCount()">
-          <svg v-svg size="12 12" symbol="icon-plus"></svg>
-        </button>
+          <button type="button" aria-label="Добавить один товар" @click="increaseCount()">
+            <svg v-svg size="12 12" symbol="icon-plus"></svg>
+          </button>
+        </div>
+        <div class="product__price">{{ $format.currRUB(product.price * amount) }}</div>
       </div>
     </div>
-
-    <div class="product__price">{{ $format.currRUB(product.price * amount) }}</div>
   </li>
 </template>

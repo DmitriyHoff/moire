@@ -15,6 +15,7 @@ const addWaiting = ref(false);
 const productSizes = ref({});
 const isAddToCart = ref(false);
 const infoLoaded = ref(false);
+const infoLoadingLock = ref(false);
 const store = useCartStore();
 watch(
   () => selectedColor.value,
@@ -62,12 +63,17 @@ function addProduct() {
 
 // загружает дополнительную информацию о продукте
 function loadProductInfo() {
-  if (infoLoaded.value) return;
-  ServerApi.getProductById(props.product.id).then((response) => {
-    productSizes.value = response.sizes;
-    selectedSize.value = productSizes.value[0].id;
-    infoLoaded.value = true;
-  });
+  console.log(infoLoaded.value);
+  if (!infoLoaded.value && !infoLoadingLock.value) {
+    infoLoadingLock.value = true;
+    ServerApi.getProductById(props.product.id).then((response) => {
+      productSizes.value = response.sizes;
+      selectedSize.value = productSizes.value[0].id;
+      infoLoaded.value = true;
+      infoLoadingLock.value = false;
+      console.log('loadded product info');
+    });
+  }
 }
 /** Вовращает идентийикатор цвета */
 function getSubColorId(colorId) {
@@ -75,7 +81,7 @@ function getSubColorId(colorId) {
 }
 </script>
 <template>
-  <li class="catalog__item" @mouseover="loadProductInfo">
+  <li class="catalog__item" @mouseover="loadProductInfo" @touchmove="loadProductInfo">
     <RouterLink
       class="catalog__pic"
       :to="{
